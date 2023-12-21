@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #1c1c1c;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.stripes-dark-45 {
+  background: repeating-linear-gradient(
+    45deg,
+    #1c1c1c 0px,
+    #1f1f1f 30px,
+    #1c1c1c 30px,
+    #1f1f1f 270px
+  );
+}
+
+.fade-in {
+  animation: fadeIn ease 3s;
+  -webkit-animation: fadeIn ease 3s;
+  -moz-animation: fadeIn ease 3s;
+  -o-animation: fadeIn ease 3s;
+  -ms-animation: fadeIn ease 3s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
