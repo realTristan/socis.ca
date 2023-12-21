@@ -12,6 +12,12 @@ html {
   scroll-behavior: smooth;
 }
 
+.text-outline-emerald {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 2px;
+  -webkit-text-stroke-color: #10b981;
+}
+
 .stripes-dark-45 {
   background: repeating-linear-gradient(
     45deg,

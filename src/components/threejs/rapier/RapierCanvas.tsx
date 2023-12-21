@@ -30,7 +30,11 @@ export default function RapierCanvas({ className }: { className?: string }) {
           shadow-mapSize={[512, 512]}
         />
         <directionalLight position={[0, 5, -4]} intensity={4} />
-        <directionalLight position={[0, -15, -0]} intensity={4} color="white" />
+        <directionalLight
+          position={[0, -15, 0]}
+          intensity={10}
+          color="#10b981"
+        />
         <EffectComposer multisampling={0}>
           <SSAO
             samples={11}
