@@ -8,7 +8,7 @@ import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Vector3 } from "three";
 
-export function Scene() {
+export function RapierRigidBodies() {
   const instances: InstancedRigidBodyProps[] = generateSphereInstances(
     numberOfSphereInstances,
   );

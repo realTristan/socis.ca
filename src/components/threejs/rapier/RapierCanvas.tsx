@@ -3,11 +3,12 @@ import { Physics } from "@react-three/rapier";
 import { Color } from "three";
 import { EffectComposer, SSAO } from "@react-three/postprocessing";
 import { PointerBall } from "./PointerBall";
-import { Scene } from "./Scene";
+import { RapierRigidBodies } from "./RapierRigidBodies";
+import { cn } from "@/utils/cn";
 
-export default function RapierBalls() {
+export default function RapierCanvas({ className }: { className?: string }) {
   return (
-    <div className="fixed left-0 top-0 z-0 h-screen w-screen">
+    <div className={cn("fixed left-0 top-0 z-0 h-screen w-screen", className)}>
       <Canvas
         shadows
         gl={{ alpha: true, stencil: false, depth: true, antialias: false }}
@@ -15,7 +16,7 @@ export default function RapierBalls() {
         onCreated={(state) => (state.gl.toneMappingExposure = 1.5)}
       >
         <Physics gravity={[0, 2, 0]}>
-          <Scene />
+          <RapierRigidBodies />
           <PointerBall />
         </Physics>
 

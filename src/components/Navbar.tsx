@@ -15,29 +15,29 @@ export default function Navbar() {
         <div className="btn group flex flex-col items-center justify-center gap-2">
           <Link
             href="/"
-            className="text-2xl font-thin tracking-wide text-white duration-300 ease-in-out group-hover:scale-110"
+            className="text-2xl font-thin tracking-wider text-white duration-300 ease-in-out group-hover:scale-110"
           >
             EVENTS
           </Link>
-          <span className="m-1 block h-0.5 w-0 bg-white duration-300 ease-in-out group-hover:w-4/5"></span>
+          <span className="m-1 block h-px w-0 bg-white duration-300 ease-in-out group-hover:w-4/5"></span>
         </div>
         <div className="btn group flex flex-col items-center justify-center gap-2">
           <Link
             href="/"
-            className="text-2xl font-thin tracking-wide text-white duration-300 ease-in-out group-hover:scale-110"
+            className="text-2xl font-thin tracking-wider text-white duration-300 ease-in-out group-hover:scale-110"
           >
             ABOUT
           </Link>
-          <span className="m-1 block h-0.5 w-0 bg-white duration-300 ease-in-out group-hover:w-4/5"></span>
+          <span className="m-1 block h-px w-0 bg-white duration-300 ease-in-out group-hover:w-4/5"></span>
         </div>
         <div className="btn group flex flex-col items-center justify-center gap-2">
           <Link
             href="/"
-            className="text-2xl font-thin tracking-wide text-white duration-300 ease-in-out group-hover:scale-110"
+            className="text-2xl font-thin tracking-wider text-white duration-300 ease-in-out group-hover:scale-110"
           >
             MEET THE TEAM
           </Link>
-          <span className="m-1 block h-0.5 w-0 bg-white duration-300 ease-in-out group-hover:w-4/5"></span>
+          <span className="m-1 block h-px w-0 bg-white duration-300 ease-in-out group-hover:w-4/5"></span>
         </div>
       </div>
     </nav>
