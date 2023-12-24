@@ -5,7 +5,7 @@ import { RigidBody } from "@react-three/rapier";
 import { easing } from "maath";
 import { useRef } from "react";
 import { Vector3 } from "three";
-import { material } from "./constants";
+import { emeraldMaterial } from "./constants";
 import { Sphere } from "@react-three/drei";
 
 export function PointerBall() {
@@ -32,7 +32,7 @@ export function PointerBall() {
 
   return (
     <RigidBody type="kinematicPosition" ref={ref}>
-      <Sphere material={material} castShadow />
+      <Sphere material={emeraldMaterial} args={[0.7, 32, 32]} />
     </RigidBody>
   );
 }

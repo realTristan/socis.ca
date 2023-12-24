@@ -3,7 +3,7 @@ import {
   type InstancedRigidBodyProps,
 } from "@react-three/rapier";
 import { generateSphereInstances } from "./generateSphereInstances";
-import { material, numberOfSphereInstances } from "./constants";
+import { grayMaterial, numberOfSphereInstances } from "./constants";
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Vector3 } from "three";
@@ -40,10 +40,10 @@ export function RapierRigidBodies() {
     >
       <instancedMesh
         args={[undefined, undefined, numberOfSphereInstances]}
-        material={material}
+        material={grayMaterial}
         castShadow
       >
-        <sphereGeometry />
+        <sphereGeometry args={[0.7, 32, 32]} />
       </instancedMesh>
     </InstancedRigidBodies>
   );

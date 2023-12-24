@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  background-color: #1c1c1c;
+  background-color: #1f1f1f;
   overflow-x: hidden;
   overflow-y: scroll;
 }
@@ -12,18 +12,36 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Pulsing stroke effect */
 .text-outline-emerald {
-  -webkit-text-fill-color: transparent;
-  -webkit-text-stroke: 2px;
+  animation: pulse 5s infinite ease-in-out;
+  color: #1f1f1f;
   -webkit-text-stroke-color: #10b981;
+  -webkit-text-stroke-width: 5px;
+  -webkit-animation: pulse 5s infinite ease-in-out;
+  -moz-animation: pulse 5s infinite ease-in-out;
+  -o-animation: pulse 5s infinite ease-in-out;
+  -ms-animation: pulse 5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    -webkit-text-stroke-color: #10b981;
+  }
+  50% {
+    -webkit-text-stroke-color: #047857;
+  }
+  100% {
+    -webkit-text-stroke-color: #10b981;
+  }
 }
 
 .stripes-dark-45 {
   background: repeating-linear-gradient(
     45deg,
-    #1c1c1c 0px,
+    #212121 0px,
+    #212121 30px,
     #1f1f1f 30px,
-    #1c1c1c 30px,
     #1f1f1f 270px
   );
 }

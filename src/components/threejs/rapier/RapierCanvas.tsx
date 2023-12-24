@@ -32,7 +32,7 @@ export default function RapierCanvas({ className }: { className?: string }) {
         <directionalLight position={[0, 5, -4]} intensity={4} />
         <directionalLight
           position={[0, -15, 0]}
-          intensity={10}
+          intensity={2}
           color="#10b981"
         />
         <EffectComposer multisampling={0}>
