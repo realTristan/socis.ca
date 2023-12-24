@@ -5,7 +5,7 @@
 body {
   background-color: #1f1f1f;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: hidden;
 }
 
 html {
@@ -14,36 +14,28 @@ html {
 
 /* Pulsing stroke effect */
 .text-outline-emerald {
-  animation: pulse 5s infinite ease-in-out;
+  animation: pulse 7s infinite ease-in-out;
   color: #1f1f1f;
-  -webkit-text-stroke-color: #10b981;
   -webkit-text-stroke-width: 5px;
-  -webkit-animation: pulse 5s infinite ease-in-out;
-  -moz-animation: pulse 5s infinite ease-in-out;
-  -o-animation: pulse 5s infinite ease-in-out;
-  -ms-animation: pulse 5s infinite ease-in-out;
+  -webkit-animation: pulse 7s infinite ease-in-out;
+  -moz-animation: pulse 7s infinite ease-in-out;
+  -o-animation: pulse 7s infinite ease-in-out;
+  -ms-animation: pulse 7s infinite ease-in-out;
 }
 
 @keyframes pulse {
   0% {
-    -webkit-text-stroke-color: #10b981;
+    -webkit-text-stroke-color: #393939;
+    opacity: 0.9;
   }
   50% {
-    -webkit-text-stroke-color: #047857;
+    -webkit-text-stroke-color: #10b981;
+    opacity: 1;
   }
   100% {
-    -webkit-text-stroke-color: #10b981;
+    -webkit-text-stroke-color: #393939;
+    opacity: 0.9;
   }
-}
-
-.stripes-dark-45 {
-  background: repeating-linear-gradient(
-    45deg,
-    #212121 0px,
-    #212121 30px,
-    #1f1f1f 30px,
-    #1f1f1f 270px
-  );
 }
 
 .fade-in {

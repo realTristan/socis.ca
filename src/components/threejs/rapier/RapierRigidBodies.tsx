@@ -43,7 +43,7 @@ export function RapierRigidBodies() {
         material={grayMaterial}
         castShadow
       >
-        <sphereGeometry args={[0.7, 32, 32]} />
+        <sphereGeometry args={[0.8, 32, 32]} />
       </instancedMesh>
     </InstancedRigidBodies>
   );

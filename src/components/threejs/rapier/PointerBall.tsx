@@ -32,7 +32,7 @@ export function PointerBall() {
 
   return (
     <RigidBody type="kinematicPosition" ref={ref}>
-      <Sphere material={emeraldMaterial} args={[0.7, 32, 32]} />
+      <Sphere material={emeraldMaterial} args={[0.6, 32, 32]} />
     </RigidBody>
   );
 }
