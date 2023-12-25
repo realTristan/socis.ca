@@ -28,7 +28,7 @@ export default function EventsPage() {
     <>
       <PageHead
         title="SOCIS | Events"
-        description="The Society of Computing and Information Systems (SOCIS) is a student organization at the University of Guelph."
+        description="The Society of Computing and Information Science (SOCIS) is a student organization at the University of Guelph."
       />
 
       <Navbar underlined={NavbarTabs.EVENTS} />

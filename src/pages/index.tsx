@@ -13,7 +13,7 @@ export default function Home() {
     <>
       <PageHead
         title="SOCIS | Home"
-        description="The Society of Computing and Information Systems (SOCIS) is a student organization at the University of Guelph."
+        description="The Society of Computing and Information Science (SOCIS) is a student organization at the University of Guelph."
       />
 
       <Navbar underlined={NavbarTabs.HOME} />

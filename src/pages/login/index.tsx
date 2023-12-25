@@ -11,7 +11,7 @@ export default function LoginPage(): JSX.Element {
     <>
       <PageHead
         title="SOCIS | Login"
-        description="The Society of Computing and Information Systems (SOCIS) is a student organization at the University of Guelph."
+        description="The Society of Computing and Information Science (SOCIS) is a student organization at the University of Guelph."
       />
 
       <Navbar underlined={null} />
@@ -37,7 +37,7 @@ function Components(): JSX.Element {
 
   return (
     <form
-      className="border-secondary flex w-[30rem] flex-col gap-3 rounded-lg border p-16"
+      className="flex w-[30rem] flex-col gap-3 rounded-lg border border-secondary p-16"
       onSubmit={onSubmit}
     >
       <h1 className="mb-2 text-4xl font-thin tracking-wider text-white">
