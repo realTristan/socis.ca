@@ -12,3 +12,13 @@ export enum Status {
   SUCCESS,
   ERROR,
 }
+
+export interface Event {
+  name: string;
+  description: string;
+  id: string;
+  date: string;
+  location: string;
+  image: string;
+  href: string;
+}

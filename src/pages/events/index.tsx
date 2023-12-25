@@ -5,7 +5,8 @@ import CustomCursor from "@/components/dynamic/CustomerCursor";
 import { BrowserView } from "react-device-detect";
 import Background from "@/components/Background";
 import SlideIntro from "@/components/SlideIntro";
-import EventCard, { type Event } from "./components/EventCard";
+import EventCard from "./components/EventCard";
+import { type Event } from "@/lib/types";
 import { useState } from "react";
 
 // Homepage component

@@ -1,17 +1,7 @@
 import { cn } from "@/utils/cn";
 import Image from "next/image";
 import Link from "next/link";
-
-// Convert to Prisma type
-export interface Event {
-  name: string;
-  description: string;
-  id: string;
-  date: string;
-  location: string;
-  image: string;
-  href: string;
-}
+import { type Event } from "@/lib/types";
 
 interface EventCardProps {
   className?: string;
@@ -21,6 +11,10 @@ interface EventCardProps {
 }
 
 export default function EventCard(props: EventCardProps): JSX.Element {
+  if (!props.event) {
+    return <></>;
+  }
+
   return (
     <div
       onMouseLeave={props.onMouseLeave}
