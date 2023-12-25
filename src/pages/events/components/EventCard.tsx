@@ -9,7 +9,7 @@ export interface Event {
   id: string;
   date: string;
   location: string;
-  image?: string;
+  image: string;
   href: string;
 }
 

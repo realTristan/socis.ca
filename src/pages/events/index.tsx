@@ -20,6 +20,7 @@ export default function EventsPage() {
     date: "December 25th 2023",
     href: "/",
     id: "98372okrugyfabhjsflu3yfg",
+    image: "/images/event-banner-tmp1.png",
   } as Event;
 
   return (
