@@ -12,8 +12,18 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Slide in intro effect */
+.animate-slide-intro {
+  transform: translate(0, -100%);
+  animation: slideIntro 1.5s 1 ease-in-out;
+  -webkit-animation: slideIntro 1.5s 1 ease-in-out;
+  -moz-animation: slideIntro 1.5s 1 ease-in-out;
+  -o-animation: slideIntro 1.5s 1 ease-in-out;
+  -ms-animation: slideIntro 1.5s 1 ease-in-out;
+}
+
 /* Pulsing stroke effect */
-.text-outline-emerald {
+.animate-text-outline-emerald {
   animation: pulse 7s infinite ease-in-out;
   color: #1f1f1f;
   -webkit-text-stroke-width: 5px;
@@ -21,6 +31,58 @@ html {
   -moz-animation: pulse 7s infinite ease-in-out;
   -o-animation: pulse 7s infinite ease-in-out;
   -ms-animation: pulse 7s infinite ease-in-out;
+}
+
+.text-outline-dark {
+  color: #1f1f1f;
+  -webkit-text-stroke-width: 5px;
+  -webkit-text-stroke-color: #393939;
+}
+
+.outline-emerald {
+  -webkit-text-stroke-width: 5px;
+  -webkit-text-stroke-color: #10b981;
+}
+
+.background-gradient {
+}
+
+.fade-in {
+  animation: fadeIn ease 3s;
+  -webkit-animation: fadeIn ease 3s;
+  -moz-animation: fadeIn ease 3s;
+  -o-animation: fadeIn ease 3s;
+  -ms-animation: fadeIn ease 3s;
+}
+
+/* 1.35 second delay */
+.fade-in-delay {
+  animation: fadeInDelay ease 2.7s;
+  -webkit-animation: fadeInDelay ease 2.7s;
+  -moz-animation: fadeInDelay ease 2.7s;
+  -o-animation: fadeInDelay ease 2.7s;
+  -ms-animation: fadeInDelay ease 2.7s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInDelay {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes pulse {
@@ -38,19 +100,17 @@ html {
   }
 }
 
-.fade-in {
-  animation: fadeIn ease 3s;
-  -webkit-animation: fadeIn ease 3s;
-  -moz-animation: fadeIn ease 3s;
-  -o-animation: fadeIn ease 3s;
-  -ms-animation: fadeIn ease 3s;
-}
-
-@keyframes fadeIn {
+@keyframes slideIntro {
   0% {
-    opacity: 0;
+    transform: translate(0, 0%);
+  }
+  10% {
+    transform: translate(0, 0%);
+  }
+  50% {
+    transform: translate(0, 100%);
   }
   100% {
-    opacity: 1;
+    transform: translate(0, -100%);
   }
 }

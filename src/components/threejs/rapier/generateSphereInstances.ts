@@ -10,9 +10,9 @@ export function generateSphereInstances(amount: number) {
 
       // Set sphere positions
       position: new Vector3(
-        MathUtils.randFloatSpread(20),
-        MathUtils.randFloatSpread(20),
-        MathUtils.randFloatSpread(20),
+        MathUtils.randFloatSpread(20) * 15,
+        MathUtils.randFloatSpread(20) * 15,
+        MathUtils.randFloatSpread(20) * 15,
       ),
 
       // Set sphere rotations
