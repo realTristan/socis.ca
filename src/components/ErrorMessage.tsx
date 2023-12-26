@@ -1,3 +1,5 @@
+import { type ReactNode } from "react";
+
 /**
  * Error message component
  * @returns JSX.Element
@@ -5,9 +7,11 @@
 export default function ErrorMessage({
   children,
 }: {
-  children: string;
+  children: ReactNode;
 }): JSX.Element {
   return (
-    <p className="text-center text-sm text-red-600 lg:text-base">{children}</p>
+    <p className="text-center text-sm font-extralight text-red-500 lg:text-base">
+      {children}
+    </p>
   );
 }
