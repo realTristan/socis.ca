@@ -83,7 +83,7 @@ export default function Navbar(props: NavbarProps) {
           ></span>
         </Link>
         <Link
-          href="/login"
+          href="/auth/signin"
           className="btn mb-3.5 flex flex-col items-center justify-center gap-2 rounded-lg border border-emerald-500 bg-primary px-5 py-3 hover:bg-emerald-900/50"
         >
           <p className="text-lg font-thin tracking-wider text-white duration-300 ease-in-out">

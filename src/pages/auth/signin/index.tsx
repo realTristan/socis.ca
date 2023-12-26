@@ -10,7 +10,7 @@ export default function LoginPage(): JSX.Element {
   return (
     <>
       <PageHead
-        title="SOCIS | Login"
+        title="SOCIS | Sign in"
         description="The Society of Computing and Information Science (SOCIS) is a student organization at the University of Guelph."
       />
 
@@ -56,7 +56,7 @@ function Components(): JSX.Element {
         onChange={(e) => setPassword(e.target.value)}
       />
       <Link
-        href="/login/forgot-password"
+        href="/auth/reset-password"
         className="btn text-sm text-emerald-500 hover:underline"
       >
         Forgot Password?
