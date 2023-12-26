@@ -44,6 +44,7 @@ export default function ResetPasswordPage(): JSX.Element {
       <MainWrapper>
         <div className="flex w-[30rem] flex-col gap-3 rounded-lg border border-secondary p-16">
           <input
+            disabled={status === Status.SUCCESS}
             className="rounded-lg border border-emerald-500 bg-primary px-4 py-3 text-base font-thin tracking-wider text-white duration-300 ease-in-out focus:outline-none disabled:opacity-50"
             placeholder="Enter your email address"
             type="email"
@@ -52,7 +53,8 @@ export default function ResetPasswordPage(): JSX.Element {
           />
 
           <button
-            className="btn mt-2 rounded-lg border border-emerald-500 bg-primary px-10 py-3 text-base font-thin tracking-wider text-white duration-300 ease-in-out hover:bg-emerald-950/50"
+            disabled={status === Status.SUCCESS}
+            className="btn mt-2 rounded-lg border border-emerald-500 bg-primary px-10 py-3 text-base font-thin tracking-wider text-white duration-300 ease-in-out hover:bg-emerald-950/50 disabled:opacity-50"
             onClick={async () => {
               setStatus(Status.LOADING);
 
