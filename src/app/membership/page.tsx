@@ -1,0 +1,25 @@
+"use client";
+
+import MainWrapper from "@/components/MainWrapper";
+import Navbar, { NavbarTabs } from "@/components/Navbar";
+import CustomCursor from "@/components/dynamic/CustomerCursor";
+import { BrowserView } from "react-device-detect";
+import Background from "@/components/Background";
+import SlideIntro from "@/components/SlideIntro";
+
+// Homepage component
+export default function VisionPage() {
+  return (
+    <>
+      <Navbar underlined={NavbarTabs.MEMBERSHIP} />
+      <Background text="MEMBERSHIP" className="-z-10" />
+
+      <BrowserView>
+        <CustomCursor />
+        <SlideIntro />
+      </BrowserView>
+
+      <MainWrapper className="z-40"></MainWrapper>
+    </>
+  );
+}

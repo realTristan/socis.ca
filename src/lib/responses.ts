@@ -1,4 +1,4 @@
-import { base64encode } from "./crypto";
+import { base64encode } from "@/lib/crypto";
 
 export class Response {
   static get Success() {
@@ -13,13 +13,13 @@ export class Response {
     };
   }
 
-  static get InvalidQueryParams() {
+  static get InvalidToken() {
     const id = base64encode(Math.random().toString());
     const timestamp = Date.now();
 
     return {
       success: false,
-      message: "Invalid query parameters",
+      message: "Invalid authorization token",
       timestamp,
       id,
     };
@@ -49,6 +49,42 @@ export class Response {
     };
   }
 
+  static get InvalidHeaders() {
+    const id = base64encode(Math.random().toString());
+    const timestamp = Date.now();
+
+    return {
+      success: false,
+      message: "Invalid request headers",
+      timestamp,
+      id,
+    };
+  }
+
+  static get InvalidAuthorization() {
+    const id = base64encode(Math.random().toString());
+    const timestamp = Date.now();
+
+    return {
+      success: false,
+      message: "Invalid request authorization token",
+      timestamp,
+      id,
+    };
+  }
+
+  static get InvalidQuery() {
+    const id = base64encode(Math.random().toString());
+    const timestamp = Date.now();
+
+    return {
+      success: false,
+      message: "Invalid request query",
+      timestamp,
+      id,
+    };
+  }
+
   static get MethodNotAllowed() {
     const id = base64encode(Math.random().toString());
     const timestamp = Date.now();
@@ -56,18 +92,6 @@ export class Response {
     return {
       success: false,
       message: "Method not allowed",
-      timestamp,
-      id,
-    };
-  }
-
-  static get NotFound() {
-    const id = base64encode(Math.random().toString());
-    const timestamp = Date.now();
-
-    return {
-      success: false,
-      message: "Not found",
       timestamp,
       id,
     };

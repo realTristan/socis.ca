@@ -6,13 +6,6 @@ export interface Response {
   id: string;
 }
 
-export enum Status {
-  IDLE,
-  LOADING,
-  SUCCESS,
-  ERROR,
-}
-
 export interface Event {
   name: string;
   description: string;
