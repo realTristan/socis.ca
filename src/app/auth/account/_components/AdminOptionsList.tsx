@@ -1,6 +1,6 @@
 import { hasPermissions } from "@/lib/permissions";
-import { Permission } from "@/lib/types";
-import { User } from "next-auth";
+import { Permission } from "@/types/types";
+import { type User } from "next-auth";
 import Link from "next/link";
 
 export default function AdminOptionsList({

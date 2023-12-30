@@ -1,5 +1,5 @@
 import { hasPermissions } from "@/lib/permissions";
-import { type Event, Permission } from "@/lib/types";
+import { type Event, Permission } from "@/types/types";
 import { type User } from "next-auth";
 import Link from "next/link";
 

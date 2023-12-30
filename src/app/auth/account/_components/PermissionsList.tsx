@@ -1,5 +1,5 @@
-import { Permission } from "@/lib/types";
-import { User } from "next-auth";
+import { type Permission } from "@/types/types";
+import { type User } from "next-auth";
 import { PermissionToString } from "../_utils/permissions";
 
 export default function PermissionsList({ user }: { user: User }): JSX.Element {

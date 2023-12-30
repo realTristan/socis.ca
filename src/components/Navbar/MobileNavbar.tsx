@@ -1,7 +1,7 @@
 import { cn } from "@/utils/cn";
 import { useState } from "react";
 import MobileMenuBars from "./MenuBars";
-import { NavbarProps } from "./Navbar";
+import { type NavbarProps } from "./Navbar";
 import Image from "next/image";
 import Link from "next/link";
 import AuthButton from "./AuthButton";

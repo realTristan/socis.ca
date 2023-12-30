@@ -20,9 +20,11 @@ export default function EventsPage() {
 function Main(): JSX.Element {
   const { status } = useSession();
 
-  const [_name, setName] = useState("");
-  const [_description, setDescription] = useState("");
-  const [_location, setLocation] = useState("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [location, setLocation] = useState("");
+  const [date, setDate] = useState("");
+  const [perks, setPerks] = useState<string[]>([]);
 
   if (status === "loading") {
     return <LoadingCenter />;
@@ -70,6 +72,15 @@ function Main(): JSX.Element {
             className="rounded-lg border border-emerald-500 bg-primary px-4 py-3 text-base font-thin tracking-wider text-white duration-300 ease-in-out focus:outline-none"
             placeholder="Date"
             type="date"
+            onChange={(e) => setDate(e.target.value)}
+          />
+
+          <label className="mb-2 mt-5 text-white">Perks</label>
+          <input
+            className="rounded-lg border border-emerald-500 bg-primary px-4 py-3 text-base font-thin tracking-wider text-white duration-300 ease-in-out focus:outline-none"
+            placeholder="Perks (Seperate by comma)"
+            type="text"
+            onChange={(e) => setPerks(e.target.value.split(","))}
           />
 
           <button

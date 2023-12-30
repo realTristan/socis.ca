@@ -6,7 +6,7 @@ import { BrowserView } from "react-device-detect";
 import Background from "@/components/Background";
 import SlideIntro from "@/components/SlideIntro";
 import EventCard from "./_components/EventCard";
-import { type Event } from "@/lib/types";
+import { type Event } from "@/types/types";
 import { useState } from "react";
 import { SessionProvider, useSession } from "next-auth/react";
 import LoadingCenter from "@/components/Loading";
@@ -21,7 +21,8 @@ const testEvent = {
   href: "/",
   id: "98372okrugyfabhjsflu3yfg",
   image: "/images/event-banner-tmp1.png",
-} as Event;
+  perks: ["Pizza", "Swag", "Networking"],
+};
 
 // Homepage component
 export default function EventsPage() {

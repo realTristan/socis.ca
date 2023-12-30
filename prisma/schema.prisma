@@ -33,6 +33,7 @@ model Event {
   image       String   @default("/images/event-banner-tmp1.png")
   date        DateTime @default(now())
   location    String   @default("The University of Guelph")
+  perks       String[]
   isBest      Boolean  @default(false)
 }
 

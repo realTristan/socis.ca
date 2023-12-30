@@ -1,5 +1,5 @@
 import { hasPermissions } from "@/lib/permissions";
-import { Permission } from "@/lib/types";
+import { Permission } from "@/types/types";
 import { type User } from "next-auth";
 import { useState } from "react";
 

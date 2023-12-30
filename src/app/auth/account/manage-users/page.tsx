@@ -10,7 +10,7 @@ import Background from "@/components/Background";
 import { hasPermissions } from "@/lib/permissions";
 import InvalidSession from "../_components/InvalidSession";
 import DarkOverlay from "../_components/DarkOverlay";
-import { Permission } from "@/lib/types";
+import { Permission } from "@/types/types";
 import InvalidPermissions from "../_components/InvalidPermissions";
 
 // Homepage component

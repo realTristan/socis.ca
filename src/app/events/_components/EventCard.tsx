@@ -1,7 +1,7 @@
 import { cn } from "@/utils/cn";
 import Image from "next/image";
 import Link from "next/link";
-import { type Event } from "@/lib/types";
+import { type Event } from "@/types/types";
 import { type User } from "next-auth";
 import EventEditButton from "./EventEditButton";
 import EventDeleteButton from "./EventDeleteButton";
@@ -24,7 +24,7 @@ export default function EventCard(props: EventCardProps): JSX.Element {
       onMouseLeave={props.onMouseLeave}
       onMouseEnter={props.onMouseEnter}
       className={cn(
-        "btn relative flex h-[30rem] w-96 flex-col items-start justify-start rounded-lg border border-emerald-500 bg-primary p-7 duration-300 ease-in-out hover:scale-105 hover:shadow-md hover:shadow-emerald-700/50",
+        "btn relative flex h-[32rem] w-96 flex-col items-start justify-start rounded-lg border border-emerald-500 bg-primary p-7 duration-300 ease-in-out hover:scale-105 hover:shadow-md hover:shadow-emerald-700/50",
         props.className,
       )}
     >
@@ -45,6 +45,12 @@ export default function EventCard(props: EventCardProps): JSX.Element {
       <p className="ml-1 mt-2 font-thin text-white">
         {props.event.description}
       </p>
+      <div className="my-2 flex flex-wrap gap-2">
+        {props.event.perks.map((perk) => (
+          <PerkLabel perk={perk} />
+        ))}
+      </div>
+
       <div className="flex flex-wrap gap-2">
         <Link
           href={props.event.href}
@@ -59,6 +65,14 @@ export default function EventCard(props: EventCardProps): JSX.Element {
         <p className="ml-1 mt-4 font-thin text-white">{props.event.location}</p>
         <p className="ml-1 font-thin text-white">{props.event.date}</p>
       </div>
+    </div>
+  );
+}
+
+function PerkLabel({ perk }: { perk: string }): JSX.Element {
+  return (
+    <div className="w-fit rounded-md border border-emerald-500 bg-emerald-950/50 px-2 py-1 text-xs font-thin text-white">
+      {perk}
     </div>
   );
 }

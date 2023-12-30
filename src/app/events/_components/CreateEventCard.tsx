@@ -1,5 +1,5 @@
 import { hasPermissions } from "@/lib/permissions";
-import { Permission } from "@/lib/types";
+import { Permission } from "@/types/types";
 import { cn } from "@/utils/cn";
 import { type User } from "next-auth";
 import Link from "next/link";
@@ -21,7 +21,7 @@ export default function EventCard(props: EventCardProps): JSX.Element {
     <Link
       href={canCreateEvents ? "/events/create" : suggestEventFormUrl}
       className={cn(
-        "btn relative flex h-[30rem] w-96 cursor-pointer flex-col items-center justify-center rounded-lg border border-emerald-500 bg-primary p-7 duration-300 ease-in-out hover:scale-105 hover:shadow-md hover:shadow-emerald-700/50",
+        "btn relative flex h-[32rem] w-96 cursor-pointer flex-col items-center justify-center rounded-lg border border-emerald-500 bg-primary p-7 duration-300 ease-in-out hover:scale-105 hover:shadow-md hover:shadow-emerald-700/50",
         props.className,
       )}
     >

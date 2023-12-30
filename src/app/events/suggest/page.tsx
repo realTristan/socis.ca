@@ -21,8 +21,8 @@ export default function EventsPage() {
 function Main(): JSX.Element {
   const { status } = useSession();
 
-  const [_name, setName] = useState("");
-  const [_description, setDescription] = useState("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
 
   if (status === "loading") {
     return <LoadingCenter />;

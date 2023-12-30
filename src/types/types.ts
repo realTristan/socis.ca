@@ -14,6 +14,7 @@ export interface Event {
   location: string;
   image: string;
   href: string;
+  perks: string[];
 }
 
 export enum Permission {

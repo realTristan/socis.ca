@@ -1,4 +1,4 @@
-import { Permission } from "@/lib/types";
+import { Permission } from "@/types/types";
 
 export function PermissionToString(permission: Permission) {
   switch (permission) {
