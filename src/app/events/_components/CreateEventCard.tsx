@@ -1,7 +1,7 @@
 import { hasPermissions } from "@/lib/permissions";
 import { Permission } from "@/lib/types";
 import { cn } from "@/utils/cn";
-import { User } from "next-auth";
+import { type User } from "next-auth";
 import Link from "next/link";
 
 interface EventCardProps {

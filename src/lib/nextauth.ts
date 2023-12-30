@@ -1,4 +1,4 @@
-import NextAuth, { User } from "next-auth";
+import NextAuth, { type User } from "next-auth";
 import { base64encode, sha256 } from "./crypto";
 import Credentials from "next-auth/providers/credentials";
 import { generateUserSecret } from "./auth";

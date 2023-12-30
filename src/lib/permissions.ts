@@ -1,4 +1,4 @@
-import { User } from "next-auth";
+import { type User } from "next-auth";
 import { Permission } from "./types";
 
 export function hasPermissions(user: User, permissions: Permission[]): boolean {

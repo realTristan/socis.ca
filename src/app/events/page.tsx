@@ -1,6 +1,5 @@
 "use client";
 
-import MainWrapper from "@/components/MainWrapper";
 import Navbar, { NavbarTabs } from "@/components/Navbar";
 import CustomCursor from "@/components/dynamic/CustomerCursor";
 import { BrowserView } from "react-device-detect";
@@ -53,7 +52,7 @@ function Main(): JSX.Element {
 
       <main className="fade-in-delay z-40 flex min-h-screen flex-wrap items-center justify-center gap-12 p-10 lg:p-20">
         <EventCard
-          user={session?.user || null}
+          user={session?.user ?? null}
           event={testEvent}
           onMouseEnter={() => {
             setBackgroundText(testEvent.name.toUpperCase());
@@ -62,7 +61,7 @@ function Main(): JSX.Element {
             setBackgroundText("EVENTS");
           }}
         />
-        <CreateEventCard user={session?.user || null} />
+        <CreateEventCard user={session?.user ?? null} />
       </main>
     </>
   );

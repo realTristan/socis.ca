@@ -6,7 +6,7 @@ import CustomCursor from "@/components/dynamic/CustomerCursor";
 import Link from "next/link";
 import { type FormEvent, useState, useEffect } from "react";
 import { BrowserView } from "react-device-detect";
-import { SignInOptions, SignInResponse, signIn } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { LoadingRelative } from "@/components/Loading";
 import ErrorMessage from "@/components/ErrorMessage";
 

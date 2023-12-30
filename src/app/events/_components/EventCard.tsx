@@ -1,9 +1,8 @@
 import { cn } from "@/utils/cn";
 import Image from "next/image";
 import Link from "next/link";
-import { Permission, type Event } from "@/lib/types";
-import { User } from "next-auth";
-import { hasPermissions } from "@/lib/permissions";
+import { type Event } from "@/lib/types";
+import { type User } from "next-auth";
 import EventEditButton from "./EventEditButton";
 import EventDeleteButton from "./EventDeleteButton";
 
