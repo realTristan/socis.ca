@@ -182,7 +182,6 @@ export class Prisma extends PrismaClient {
         password: password || generatedPassword,
         name: name || DEFAULT_USER_NAME,
         image: image || DEFAULT_USER_IMAGE,
-        permissions: [0],
       },
     });
   };
@@ -212,8 +211,8 @@ export class Prisma extends PrismaClient {
    * @param userSecret The user's secret
    */
   public static readonly updateUserName = async (
-    name: string,
     userSecret: string,
+    name: string,
   ): Promise<User> => {
     return await Prisma.update("user", {
       where: {
@@ -231,8 +230,8 @@ export class Prisma extends PrismaClient {
    * @param userSecret The user's secret
    */
   public static readonly updateUserImage = async (
-    image: string,
     userSecret: string,
+    image: string,
   ): Promise<User> => {
     return await Prisma.update("user", {
       where: {
