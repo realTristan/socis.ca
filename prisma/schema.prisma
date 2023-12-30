@@ -8,16 +8,40 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Settings {
+  id String @id @unique @default(uuid())
+}
+
 model User {
-  id          String   @id @default(uuid())
+  id          String   @id @unique @default(uuid())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  name        String
-  email       String   @unique
-  password    String
-  image       String
   secret      String   @unique
-  permissions Int[]
+  email       String   @unique
+  password    String   @default(uuid())
+  name        String   @default("New User")
+  image       String   @default("/images/default-pfp.png")
+  permissions Int[]    @default([0])
+}
+
+model Event {
+  id          String   @id @unique @default(uuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  name        String   @default("New Event")
+  description String   @default("New Event")
+  image       String   @default("/images/event-banner-tmp1.png")
+  date        DateTime @default(now())
+  location    String   @default("The University of Guelph")
+  isBest      Boolean  @default(false)
+}
+
+model Election {
+  id                 String   @id @default(uuid())
+  startDate          DateTime @default(now())
+  endDate            DateTime @default(now())
+  applicationFormUrl String   @default("/")
+  applications       Int      @default(0)
 }
 
 // npx prisma migrate dev --name init
