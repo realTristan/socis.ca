@@ -14,11 +14,12 @@ export default function EventCard(props: EventCardProps): JSX.Element {
     return <></>;
   }
 
+  const suggestEventFormUrl = "/events/suggest";
   const canCreateEvents = hasPermissions(props.user, [Permission.CREATE_EVENT]);
 
   return (
     <Link
-      href={canCreateEvents ? "/events/create" : "/events/suggest"}
+      href={canCreateEvents ? "/events/create" : suggestEventFormUrl}
       className={cn(
         "btn relative flex h-[30rem] w-96 cursor-pointer flex-col items-center justify-center rounded-lg border border-emerald-500 bg-primary p-7 duration-300 ease-in-out hover:scale-105 hover:shadow-md hover:shadow-emerald-700/50",
         props.className,
