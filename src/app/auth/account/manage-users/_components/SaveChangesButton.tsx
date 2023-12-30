@@ -1,5 +1,5 @@
 import { LoadingRelative } from "@/components/Loading";
-import { Status } from "../_utils/status";
+import { Status } from "../../../../../lib/status";
 
 interface SaveChangesButtonProps {
   onClick: () => Promise<void>;

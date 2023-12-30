@@ -10,7 +10,7 @@ import Background from "@/components/Background";
 import { hasPermissions } from "@/lib/permissions";
 import InvalidSession from "../_components/InvalidSession";
 import DarkOverlay from "../_components/DarkOverlay";
-import { Permission } from "@/types/types";
+import { type Optional, Permission } from "@/types/types";
 import InvalidPermissions from "../_components/InvalidPermissions";
 import { type User } from "next-auth";
 import { useEffect, useState } from "react";
@@ -20,7 +20,8 @@ import SaveChangesButton from "./_components/SaveChangesButton";
 import SearchInput from "./_components/SearchInput";
 import PermissionsList from "./_components/PermissionsList";
 import EditUserButton from "./_components/EditUserButton";
-import { Status } from "./_utils/status";
+import { Status } from "../../../../lib/status";
+import { stobj } from "@/lib/state";
 
 // Homepage component
 export default function ManageUsersPage() {
@@ -49,28 +50,27 @@ async function fetchUsersApi(): Promise<User[]> {
 
 function Main(): JSX.Element {
   const { data: session, status } = useSession();
-  const [users, setUsers] = useState<User[]>([]);
-  const [fetchStatus, setFetchStatus] = useState<Status>(Status.LOADING);
-  const [search, setSearch] = useState<string>("");
-  const [editingUser, setEditingUser] = useState<User>();
-  const [userUpdateStatus, setUserUpdateStatus] = useState<Status>(Status.IDLE);
+
+  const users = stobj(useState<User[]>([]));
+  const fetchStatus = stobj(useState<Status>(Status.IDLE));
+  const search = stobj(useState<string>(""));
+  const editingUser = stobj(useState<Optional<User>>());
+  const userUpdateStatus = stobj(useState<Status>(Status.IDLE));
 
   useEffect(() => {
+    fetchStatus.set(Status.LOADING);
+
     if (status !== "authenticated") {
       return;
     }
 
-    setFetchStatus(Status.LOADING);
-
-    fetchUsersApi()
-      .then((users) => {
-        setUsers(users || []);
-        setFetchStatus(Status.SUCCESS);
-      })
-      .catch((_) => setFetchStatus(Status.ERROR));
+    fetchUsersApi().then((_users) => {
+      users.set(_users);
+      fetchStatus.set(Status.SUCCESS);
+    });
   }, [status]);
 
-  if (status === "loading" || fetchStatus === Status.LOADING) {
+  if (status === "loading" || fetchStatus.value === Status.LOADING) {
     return <LoadingCenter />;
   }
 
@@ -99,73 +99,83 @@ function Main(): JSX.Element {
       <p className="text-center text-sm font-light text-white/80">
         {session?.user?.email ?? "user"}.
       </p>
-      <SearchInput setSearch={setSearch} />
+      <SearchInput search={search} />
 
-      {fetchStatus === Status.SUCCESS &&
-        users.map((user) => {
-          const lowerName = user.name.toLowerCase();
-          const lowerEmail = user.email.toLowerCase();
-          const editingCurrentUser = editingUser?.id === user.id;
+      {fetchStatus.value === Status.SUCCESS &&
+        users.value.map((_user) => {
+          const lowerName = _user.name.toLowerCase();
+          const lowerEmail = _user.email.toLowerCase();
 
           // If the user doesn't match the search query, don't render them
-          if (!lowerName.includes(search) && !lowerEmail.includes(search)) {
+          if (
+            !lowerName.includes(search.value) &&
+            !lowerEmail.includes(search.value)
+          ) {
             return <></>;
           }
 
           return (
             <div
-              key={user.id}
+              key={_user.id}
               className="flex w-full flex-col items-start justify-start gap-2 rounded-md border border-emerald-500 p-3"
             >
               <div className="flex w-full flex-row items-center justify-between">
-                <UserInfo user={user} />
+                <UserInfo user={_user} />
                 <EditUserButton
-                  user={user}
-                  setEditingUser={setEditingUser}
-                  editingCurrentUser={editingCurrentUser}
-                  userUpdateStatus={userUpdateStatus}
+                  user={_user}
+                  editingUser={editingUser}
+                  userUpdateStatus={userUpdateStatus.value}
                 />
               </div>
 
-              {editingUser?.id === user.id && (
+              {editingUser.value?.id === _user.id && (
                 <div className="mt-4 flex w-full flex-row items-center justify-between">
                   <PermissionsList
                     session={session}
-                    user={user}
+                    user={_user}
                     onChange={(e, permission) => {
-                      e.target.checked && !user.permissions.includes(permission)
-                        ? user.permissions.push(permission)
-                        : user.permissions.splice(
-                            user.permissions.indexOf(permission),
+                      e.target.checked &&
+                      !_user.permissions.includes(permission)
+                        ? _user.permissions.push(permission)
+                        : _user.permissions.splice(
+                            _user.permissions.indexOf(permission),
                             1,
                           );
 
-                      setEditingUser(user);
+                      editingUser.set(_user);
                     }}
                   />
                   <SaveChangesButton
-                    userUpdateStatus={userUpdateStatus}
+                    userUpdateStatus={userUpdateStatus.value}
                     onClick={async () => {
-                      setUserUpdateStatus(Status.LOADING);
+                      userUpdateStatus.set(Status.LOADING);
+
+                      if (!editingUser.value) {
+                        return userUpdateStatus.set(Status.ERROR);
+                      }
 
                       const adminSecret = session.user.secret;
-                      const newPermissions = user.permissions;
+                      const newPermissions = _user.permissions;
                       const res = await updateUserPermissions(
                         adminSecret,
-                        editingUser,
+                        editingUser.value,
                         newPermissions,
                       );
 
                       if (!res.ok) {
-                        return setUserUpdateStatus(Status.ERROR);
+                        return userUpdateStatus.set(Status.ERROR);
                       }
 
-                      setUsers(
-                        updateUsersArray(users, editingUser.id, newPermissions),
+                      users.set(
+                        updateUsersArray(
+                          users.value,
+                          editingUser.value.id,
+                          newPermissions,
+                        ),
                       );
 
-                      setEditingUser(undefined);
-                      setUserUpdateStatus(Status.IDLE);
+                      editingUser.set(undefined);
+                      userUpdateStatus.set(Status.SUCCESS);
                     }}
                   />
                 </div>
