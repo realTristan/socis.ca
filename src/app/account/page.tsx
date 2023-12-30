@@ -4,8 +4,6 @@ import MainWrapper from "@/components/MainWrapper";
 import Navbar from "@/components/Navbar";
 import CustomCursor from "@/components/dynamic/CustomerCursor";
 import { BrowserView } from "react-device-detect";
-import Background from "@/components/Background";
-import SlideIntro from "@/components/SlideIntro";
 import { SessionProvider, useSession } from "next-auth/react";
 import LoadingCenter from "@/components/Loading";
 
@@ -14,11 +12,9 @@ export default function AccountPage() {
   return (
     <>
       <Navbar underlined={null} />
-      <Background text="ABOUT" className="-z-10" />
 
       <BrowserView>
         <CustomCursor />
-        <SlideIntro />
       </BrowserView>
 
       <SessionProvider>
