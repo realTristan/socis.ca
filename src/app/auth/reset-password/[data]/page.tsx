@@ -5,7 +5,7 @@ import LoadingCenter from "@/components/Loading";
 import MainWrapper from "@/components/MainWrapper";
 import Navbar from "@/components/Navbar";
 import CustomCursor from "@/components/dynamic/CustomerCursor";
-import { base64decode } from "@/lib/crypto";
+import { base64decode, sha256 } from "@/lib/crypto";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BrowserView } from "react-device-detect";
@@ -24,12 +24,14 @@ async function updatePassword(
   email: string,
   password: string,
 ): Promise<Response> {
+  const hashedPassword = await sha256(password);
+
   const res = await fetch("/api/password-reset", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ token, email, password }),
+    body: JSON.stringify({ token, email, password: hashedPassword }),
   });
 
   return res;
