@@ -3,6 +3,7 @@ import { SessionProvider, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { LoadingRelative } from "./Loading";
+import { PropsWithChildren } from "react";
 
 export enum NavbarTabs {
   HOME,
@@ -13,10 +14,11 @@ export enum NavbarTabs {
 
 interface NavbarProps {
   className?: string;
+  showAuthButton?: boolean;
   underlined: NavbarTabs | null;
 }
 
-export default function Navbar(props: NavbarProps) {
+export default function Navbar(props: PropsWithChildren<NavbarProps>) {
   return (
     <nav className="fixed z-50 flex w-screen flex-row items-center justify-between px-12 py-8 pr-20">
       <Image
@@ -85,7 +87,18 @@ export default function Navbar(props: NavbarProps) {
           ></span>
         </Link>
         <SessionProvider>
-          <AuthButton />
+          {props.showAuthButton ? (
+            <AuthButton />
+          ) : (
+            <Link
+              href="/auth/account"
+              className="btn mb-3.5 flex flex-col items-center justify-center gap-2 rounded-lg border border-emerald-500 bg-primary px-5 py-3 hover:bg-emerald-900/50 disabled:opacity-50"
+            >
+              <p className="text-lg font-thin tracking-wider text-white duration-300 ease-in-out">
+                ACCOUNT
+              </p>
+            </Link>
+          )}
         </SessionProvider>
       </div>
     </nav>
@@ -99,7 +112,7 @@ function AuthButton(): JSX.Element {
     return (
       <button
         disabled={true}
-        className="btn mb-3.5 flex flex-col items-center justify-center gap-2 rounded-lg border border-emerald-500 bg-primary px-5 py-3 hover:bg-emerald-900/50 disabled:opacity-50"
+        className="btn mb-3.5 flex flex-col items-center justify-center gap-2 rounded-lg border border-emerald-500 px-5 py-3 hover:bg-emerald-900/50 disabled:opacity-50"
       >
         <LoadingRelative className="h-5 w-5" />
       </button>
@@ -113,7 +126,7 @@ function AuthButton(): JSX.Element {
           await signOut();
           window.location.href = "/auth/signin";
         }}
-        className="btn mb-3.5 flex flex-col items-center justify-center gap-2 rounded-lg border border-emerald-500 bg-primary px-5 py-3 hover:bg-emerald-900/50 disabled:opacity-50"
+        className="btn mb-3.5 flex flex-col items-center justify-center gap-2 rounded-lg border border-emerald-500 px-5 py-3 hover:bg-emerald-900/50 disabled:opacity-50"
       >
         <p className="text-lg font-thin tracking-wider text-white duration-300 ease-in-out">
           SIGN OUT

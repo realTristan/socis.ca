@@ -2,11 +2,37 @@ import NextAuth, { type User } from "next-auth";
 import { base64encode, sha256 } from "./crypto";
 import Credentials from "next-auth/providers/credentials";
 import { generateUserSecret } from "./auth";
+import { NextRequest } from "next/server";
 
 export const handler = NextAuth({
   pages: {
     signIn: "/auth/signin",
   },
+  callbacks: {
+    async session({ session }) {
+      const user = session.user as User;
+      if (!user) {
+        return session;
+      }
+
+      const res = await import("@/app/api/users/email/[email]/route");
+      const encodedEmail = base64encode(user.email);
+      const response = await res.GET({
+        url: `/api/users/${encodedEmail}`,
+      } as NextRequest);
+
+      if (!response.ok) {
+        return session;
+      }
+
+      const json = await response.json();
+      return {
+        ...session,
+        user: json.user,
+      };
+    },
+  },
+
   providers: [
     Credentials({
       name: "Credentials",
@@ -14,6 +40,7 @@ export const handler = NextAuth({
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
+
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
           return null;
@@ -23,18 +50,16 @@ export const handler = NextAuth({
         const res = await import("@/app/api/users/email/[email]/route");
         const encodedEmail = base64encode(credentials.email);
         const userSecret = await generateUserSecret(credentials.email);
-
         const response = await res.POST({
           url: `/api/users/${encodedEmail}`,
           json: async () => ({
             password: true,
           }),
 
-          // @ts-ignore
           headers: {
             get: (name: string) => (name === "Authorization" ? userSecret : ""),
           },
-        });
+        } as NextRequest);
 
         if (!response.ok) {
           return null;

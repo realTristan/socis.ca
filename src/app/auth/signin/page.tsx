@@ -58,7 +58,7 @@ function Components(): JSX.Element {
       email,
       password,
       redirect: true,
-      callbackUrl: "/account",
+      callbackUrl: "/auth/account",
     });
 
     if (res?.error) {
