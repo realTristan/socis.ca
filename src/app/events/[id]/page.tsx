@@ -18,7 +18,7 @@ export default function EventsPage() {
 }
 
 function Main(): JSX.Element {
-  const { data: session, status } = useSession();
+  const { data: _session, status } = useSession();
 
   // Get the event id
   const path = usePathname();

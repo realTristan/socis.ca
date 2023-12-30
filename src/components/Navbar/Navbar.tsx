@@ -1,6 +1,6 @@
 import { cn } from "@/utils/cn";
 import { SessionProvider } from "next-auth/react";
-import { PropsWithChildren } from "react";
+import { type PropsWithChildren } from "react";
 import MobileNavbar from "./MobileNavbar";
 import DefaultNavbar from "./DefaultNavbar";
 

@@ -2,7 +2,7 @@ import NextAuth, { type User } from "next-auth";
 import { base64encode, sha256 } from "./crypto";
 import Credentials from "next-auth/providers/credentials";
 import { generateUserSecret } from "./auth";
-import { NextRequest } from "next/server";
+import { type NextRequest } from "next/server";
 
 export const handler = NextAuth({
   pages: {

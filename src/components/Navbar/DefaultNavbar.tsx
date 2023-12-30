@@ -1,9 +1,9 @@
 import { cn } from "@/utils/cn";
 import Image from "next/image";
 import Link from "next/link";
-import { PropsWithChildren } from "react";
+import { type PropsWithChildren } from "react";
 import AuthButton from "./AuthButton";
-import { NavbarProps, NavbarTabs } from "./Navbar";
+import { type NavbarProps, NavbarTabs } from "./Navbar";
 
 export default function DefaultNavbar(props: PropsWithChildren<NavbarProps>) {
   return (
