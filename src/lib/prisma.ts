@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { User } from "next-auth";
+import { type User } from "next-auth";
 import { genId } from "./crypto";
 
 export class Prisma extends PrismaClient {

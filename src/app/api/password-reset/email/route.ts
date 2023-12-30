@@ -3,7 +3,7 @@ import {
   generatePasswordResetToken,
   generatePasswordResetUrl,
 } from "../../_lib/passwordReset";
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
 const API_KEY = process.env.SMTP_PROVIDER_API_KEY;
 const API_URL = process.env.SMTP_PROVIDER_BASE_URL + "/email/send";

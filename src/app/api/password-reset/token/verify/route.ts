@@ -1,6 +1,5 @@
-import { type NextApiRequest } from "next";
 import { verifyPasswordResetToken } from "@/app/api/_lib/passwordReset";
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { Response } from "@/lib/responses";
 
 export async function POST(req: NextRequest) {

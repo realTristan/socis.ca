@@ -1,10 +1,10 @@
 {
-  "name": "trpc-template-nextjs",
+  "name": "socis.ca",
   "version": "0.1.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "next build",
+    "build": "next build && npx prisma generate",
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start"
@@ -17,7 +17,7 @@
     "@react-three/rapier": "^1.2.1",
     "clsx": "^2.0.0",
     "maath": "^0.10.7",
-    "next": "^14.0.5-canary.26",
+    "next": "^14.0.4",
     "next-auth": "^4.24.5",
     "react": "18.2.0",
     "react-device-detect": "^2.2.3",
@@ -31,6 +31,7 @@
     "@types/node": "^18.17.0",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
+    "@types/three": "^0.160.0",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "@typescript-eslint/parser": "^6.11.0",
     "autoprefixer": "^10.4.14",

@@ -1,6 +1,6 @@
 import { verifyPasswordResetToken } from "@/app/api/_lib/passwordReset";
 import { Response } from "@/lib/responses";
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   const { email, token, password } = await req.json();

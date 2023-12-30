@@ -7,7 +7,6 @@ import Navbar from "@/components/Navbar";
 import CustomCursor from "@/components/dynamic/CustomerCursor";
 import { base64decode } from "@/lib/crypto";
 import { usePathname } from "next/navigation";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { BrowserView } from "react-device-detect";
 

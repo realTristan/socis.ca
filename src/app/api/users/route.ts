@@ -1,5 +1,5 @@
 import { Prisma } from "@/lib/prisma";
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { Response } from "@/lib/responses";
 import { genId, sha256 } from "@/lib/crypto";
 
@@ -8,12 +8,12 @@ import { genId, sha256 } from "@/lib/crypto";
  * @param req The request object
  * @returns The response object
  */
-export async function GET(req: NextRequest) {
+export async function GET() {
   return await Prisma.getUsers()
     .then((users) => {
       return NextResponse.json({ users, ...Response.Success }, { status: 200 });
     })
-    .catch((err) => {
+    .catch(() => {
       return NextResponse.json(Response.InternalError, { status: 500 });
     });
 }
@@ -25,7 +25,7 @@ export async function GET(req: NextRequest) {
  */
 export async function POST(req: NextRequest) {
   // Get the user's info from the request body
-  let { name, email, image, password } = await req.json();
+  const { name, email, image, password } = await req.json();
   if (!email) {
     return NextResponse.json(Response.InvalidBody, { status: 400 });
   }
@@ -58,6 +58,6 @@ export async function POST(req: NextRequest) {
       },
       ...Response.Success,
     },
-    { status: 200 }
+    { status: 200 },
   );
 }
