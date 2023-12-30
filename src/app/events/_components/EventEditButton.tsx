@@ -1,10 +1,13 @@
 import { hasPermissions } from "@/lib/permissions";
-import { Permission } from "@/lib/types";
+import { Event, Permission } from "@/lib/types";
 import { type User } from "next-auth";
+import Link from "next/link";
 
 export default function EventEditButton({
+  event,
   user,
 }: {
+  event: Event;
   user: User | null;
 }): JSX.Element {
   if (!user) {
@@ -17,10 +20,11 @@ export default function EventEditButton({
   }
 
   return (
-    <div className="absolute right-4 top-4">
-      <button className="rounded-lg border border-emerald-500 px-10 py-3 font-thin text-white hover:bg-emerald-900/50">
-        Edit
-      </button>
-    </div>
+    <Link
+      href={`/events/${event.id}/edit`}
+      className="mt-4 flex h-12 flex-col items-center justify-center rounded-lg border border-emerald-500 px-4 text-center text-sm font-thin text-white hover:bg-emerald-900/50"
+    >
+      Edit
+    </Link>
   );
 }

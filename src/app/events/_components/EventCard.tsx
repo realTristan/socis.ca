@@ -45,18 +45,20 @@ export default function EventCard(props: EventCardProps): JSX.Element {
       <p className="ml-1 mt-2 font-thin text-white">
         {props.event.description}
       </p>
-      <Link
-        href={props.event.href}
-        className="mt-4 rounded-lg border border-emerald-500 px-10 py-3 font-thin text-white hover:bg-emerald-900/50"
-      >
-        Learn more
-      </Link>
+      <div className="flex flex-wrap gap-2">
+        <Link
+          href={props.event.href}
+          className="mt-4 h-fit w-fit rounded-lg border border-emerald-500 px-7 py-3 text-sm font-thin text-white hover:bg-emerald-900/50"
+        >
+          Learn more
+        </Link>
+        <EventEditButton user={props.user} event={props.event} />
+        <EventDeleteButton user={props.user} />
+      </div>
       <div className="absolute bottom-4 left-4">
         <p className="ml-1 mt-4 font-thin text-white">{props.event.location}</p>
         <p className="ml-1 font-thin text-white">{props.event.date}</p>
       </div>
-      <EventEditButton user={props.user} />
-      <EventDeleteButton user={props.user} />
     </div>
   );
 }

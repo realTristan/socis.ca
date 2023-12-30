@@ -21,9 +21,9 @@ export default function Navbar(props: PropsWithChildren<NavbarProps>) {
   return (
     <SessionProvider>
       <DefaultNavbar
-        underlined={props.underlined}
-        showAuthButton={props.showAuthButton}
         className={cn("hidden flex-auto lg:flex", props.className)}
+        showAuthButton={props.showAuthButton}
+        underlined={props.underlined}
       />
       <MobileNavbar
         className={cn("lg:hidden", props.className)}
