@@ -1,4 +1,4 @@
-import { verifyPasswordResetToken } from "@/app/api/_lib/passwordReset";
+import { verifyPasswordResetToken } from "@/app/api/password-reset/_utils/helpers";
 import { type NextRequest, NextResponse } from "next/server";
 import { Response } from "@/lib/responses";
 

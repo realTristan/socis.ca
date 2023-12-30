@@ -2,7 +2,7 @@ import { Response } from "@/lib/responses";
 import {
   generatePasswordResetToken,
   generatePasswordResetUrl,
-} from "../../_lib/passwordReset";
+} from "../_utils/helpers";
 import { type NextRequest, NextResponse } from "next/server";
 
 const API_KEY = process.env.SMTP_PROVIDER_API_KEY;
