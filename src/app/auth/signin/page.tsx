@@ -1,7 +1,7 @@
 "use client";
 
 import MainWrapper from "@/components/MainWrapper";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/Navbar/Navbar";
 import CustomCursor from "@/components/dynamic/CustomerCursor";
 import Link from "next/link";
 import { type FormEvent, useState, useEffect } from "react";

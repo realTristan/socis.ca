@@ -3,7 +3,7 @@
 import ErrorMessage from "@/components/ErrorMessage";
 import LoadingCenter from "@/components/Loading";
 import MainWrapper from "@/components/MainWrapper";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/Navbar/Navbar";
 import CustomCursor from "@/components/dynamic/CustomerCursor";
 import { base64decode, sha256 } from "@/lib/crypto";
 import { usePathname } from "next/navigation";

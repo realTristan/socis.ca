@@ -1,6 +1,6 @@
 "use client";
 
-import Navbar, { NavbarTabs } from "@/components/Navbar";
+import Navbar, { NavbarTabs } from "@/components/Navbar/Navbar";
 import CustomCursor from "@/components/dynamic/CustomerCursor";
 import { BrowserView } from "react-device-detect";
 import Background from "@/components/Background";

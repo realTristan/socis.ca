@@ -3,7 +3,7 @@
 import ErrorMessage from "@/components/ErrorMessage";
 import LoadingCenter from "@/components/Loading";
 import MainWrapper from "@/components/MainWrapper";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/Navbar/Navbar";
 import CustomCursor from "@/components/dynamic/CustomerCursor";
 import { useState } from "react";
 import { BrowserView } from "react-device-detect";

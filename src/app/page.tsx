@@ -1,7 +1,7 @@
 "use client";
 
 import MainWrapper from "@/components/MainWrapper";
-import Navbar, { NavbarTabs } from "@/components/Navbar";
+import Navbar, { NavbarTabs } from "@/components/Navbar/Navbar";
 import RapierCanvas from "@/components/threejs/rapier/RapierCanvas";
 import CustomCursor from "@/components/dynamic/CustomerCursor";
 import { BrowserView } from "react-device-detect";

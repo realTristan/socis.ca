@@ -1,26 +1,13 @@
 import { cn } from "@/utils/cn";
-import { SessionProvider, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { LoadingRelative } from "./Loading";
 import { PropsWithChildren } from "react";
+import AuthButton from "./AuthButton";
+import { NavbarProps, NavbarTabs } from "./Navbar";
 
-export enum NavbarTabs {
-  HOME,
-  EVENTS,
-  ABOUT,
-  MEMBERSHIP,
-}
-
-interface NavbarProps {
-  className?: string;
-  showAuthButton?: boolean;
-  underlined: NavbarTabs | null;
-}
-
-export default function Navbar(props: PropsWithChildren<NavbarProps>) {
+export default function DefaultNavbar(props: PropsWithChildren<NavbarProps>) {
   return (
-    <nav className="fixed z-50 flex w-screen flex-row items-center justify-between px-12 py-8 pr-20">
+    <nav className="fixed z-50 hidden w-screen flex-row items-center justify-between px-12 py-8 pr-20 lg:flex">
       <Image
         src="/images/logo.png"
         alt="..."
@@ -86,63 +73,19 @@ export default function Navbar(props: PropsWithChildren<NavbarProps>) {
             )}
           ></span>
         </Link>
-        <SessionProvider>
-          {props.showAuthButton ? (
-            <AuthButton />
-          ) : (
-            <Link
-              href="/auth/account"
-              className="btn mb-3.5 flex flex-col items-center justify-center gap-2 rounded-lg border border-emerald-500 bg-primary px-5 py-3 hover:bg-emerald-900/50 disabled:opacity-50"
-            >
-              <p className="text-lg font-thin tracking-wider text-white duration-300 ease-in-out">
-                ACCOUNT
-              </p>
-            </Link>
-          )}
-        </SessionProvider>
+        {props.showAuthButton ? (
+          <AuthButton />
+        ) : (
+          <Link
+            href="/auth/account"
+            className="btn mb-3.5 flex flex-col items-center justify-center gap-2 rounded-lg border border-emerald-500 bg-primary px-5 py-3 hover:bg-emerald-900/50 disabled:opacity-50"
+          >
+            <p className="text-lg font-thin tracking-wider text-white duration-300 ease-in-out">
+              ACCOUNT
+            </p>
+          </Link>
+        )}
       </div>
     </nav>
-  );
-}
-
-function AuthButton(): JSX.Element {
-  const { status } = useSession();
-
-  if (status === "loading") {
-    return (
-      <button
-        disabled={true}
-        className="btn mb-3.5 flex flex-col items-center justify-center gap-2 rounded-lg border border-emerald-500 px-5 py-3 hover:bg-emerald-900/50 disabled:opacity-50"
-      >
-        <LoadingRelative className="h-5 w-5" />
-      </button>
-    );
-  }
-
-  if (status === "authenticated") {
-    return (
-      <button
-        onClick={async () => {
-          await signOut();
-          window.location.href = "/auth/signin";
-        }}
-        className="btn mb-3.5 flex flex-col items-center justify-center gap-2 rounded-lg border border-emerald-500 px-5 py-3 hover:bg-emerald-900/50 disabled:opacity-50"
-      >
-        <p className="text-lg font-thin tracking-wider text-white duration-300 ease-in-out">
-          SIGN OUT
-        </p>
-      </button>
-    );
-  }
-
-  return (
-    <Link
-      href="/auth/signin"
-      className="btn mb-3.5 flex flex-col items-center justify-center gap-2 rounded-lg border border-emerald-500 bg-primary px-5 py-3 hover:bg-emerald-900/50"
-    >
-      <p className="text-lg font-thin tracking-wider text-white duration-300 ease-in-out">
-        EXEC LOGIN
-      </p>
-    </Link>
   );
 }
