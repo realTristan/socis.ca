@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
 
   // Get the user's info
   const decodedEmail = base64decode(email);
-  const user = await Prisma.getUserByEmail(decodedEmail);
+  const user = await Prisma.getUserByEmail(decodedEmail).catch(() => null);
 
   // If the user doesn't exist, return an error
   if (!user) {
@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
 
   // Get the user's info
   const decodedEmail = base64decode(email);
-  const user = await Prisma.getUserByEmail(decodedEmail);
+  const user = await Prisma.getUserByEmail(decodedEmail).catch(() => null);
 
   // If the user doesn't exist, return an error
   if (!user) {

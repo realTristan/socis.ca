@@ -38,12 +38,24 @@ export async function POST(req: NextRequest) {
 
   // Get the user's info
   const secret: string = await sha256(email + bearerSecret);
-  let user = await Prisma.getUser(secret);
+  let user = await Prisma.getUser(secret).catch(() => null);
 
   // If the user doesn't exist, create them
   if (!user) {
     const id: string = await genId();
-    user = await Prisma.createUser(id, name, email, password, image, secret);
+    user = await Prisma.createUser(
+      id,
+      name,
+      email,
+      password,
+      image,
+      secret,
+    ).catch(() => null);
+  }
+
+  // If the user couldn't be created, return an error
+  if (!user) {
+    return NextResponse.json(Response.InternalError, { status: 500 });
   }
 
   // Return the user's info

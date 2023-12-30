@@ -188,6 +188,25 @@ export class Prisma extends PrismaClient {
   };
 
   /**
+   * Update the user's password
+   * @param password The user's password
+   * @param userSecret The user's secret
+   */
+  public static readonly updateUserPassword = async (
+    userSecret: string,
+    password: string,
+  ): Promise<User> => {
+    return await Prisma.update("user", {
+      where: {
+        secret: userSecret,
+      },
+      data: {
+        password,
+      },
+    });
+  };
+
+  /**
    * Update the user's name
    * @param name The user's name
    * @param userSecret The user's secret

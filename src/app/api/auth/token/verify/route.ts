@@ -11,7 +11,10 @@ export async function POST(req: NextRequest) {
   }
 
   // Check if the user already exists
-  const user = await Prisma.getUserByEmail(email);
+  const user = await Prisma.getUserByEmail(email).catch(() => {
+    return NextResponse.json(Response.InternalError, { status: 500 });
+  });
+
   if (user) {
     return NextResponse.json(Response.InvalidQuery, { status: 400 });
   }
