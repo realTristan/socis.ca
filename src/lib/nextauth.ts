@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+import NextAuth, { User } from "next-auth";
 import { base64encode, sha256 } from "./crypto";
 import Credentials from "next-auth/providers/credentials";
 import { generateUserSecret } from "./auth";
@@ -57,7 +57,7 @@ export const handler = NextAuth({
           image: user.image,
           secret: userSecret,
           permissions: user.permissions,
-        };
+        } as User;
       },
     }),
   ],

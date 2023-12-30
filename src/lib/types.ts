@@ -15,3 +15,11 @@ export interface Event {
   image: string;
   href: string;
 }
+
+export enum Permission {
+  DEFAULT, // 0
+  CREATE_EVENT, // 1
+  EDIT_EVENT, // 2
+  DELETE_EVENT, // 3
+  ADMIN, // 4 - All permissions
+}

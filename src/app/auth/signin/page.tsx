@@ -4,16 +4,18 @@ import MainWrapper from "@/components/MainWrapper";
 import Navbar from "@/components/Navbar";
 import CustomCursor from "@/components/dynamic/CustomerCursor";
 import Link from "next/link";
-import { type FormEvent, useState } from "react";
+import { type FormEvent, useState, useEffect } from "react";
 import { BrowserView } from "react-device-detect";
-import { signIn } from "next-auth/react";
+import { SignInOptions, SignInResponse, signIn } from "next-auth/react";
 import { LoadingRelative } from "@/components/Loading";
+import ErrorMessage from "@/components/ErrorMessage";
 
 enum SignInStatus {
   IDLE,
   SUCCESS,
   ERROR,
   LOADING,
+  INVALID_CREDENTIALS,
 }
 
 export default function LoginPage(): JSX.Element {
@@ -37,17 +39,33 @@ function Components(): JSX.Element {
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState(SignInStatus.IDLE);
 
+  // Get the error url param if it exists
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const error = urlParams.get("error");
+
+    if (error) {
+      setStatus(SignInStatus.INVALID_CREDENTIALS);
+    }
+  }, []);
+
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     setStatus(SignInStatus.LOADING);
 
-    await signIn("credentials", {
+    const res = await signIn("credentials", {
       email,
       password,
       redirect: true,
       callbackUrl: "/account",
     });
+
+    if (res?.error) {
+      return setStatus(SignInStatus.ERROR);
+    }
+
+    res?.ok ? setStatus(SignInStatus.SUCCESS) : setStatus(SignInStatus.ERROR);
   }
 
   return (
@@ -70,6 +88,7 @@ function Components(): JSX.Element {
         type="password"
         onChange={(e) => setPassword(e.target.value)}
       />
+
       <Link
         href="/auth/reset-password"
         className="btn text-sm text-emerald-500 hover:underline"
@@ -87,6 +106,13 @@ function Components(): JSX.Element {
           <p>Sign in</p>
         )}
       </button>
+
+      {status === SignInStatus.INVALID_CREDENTIALS && (
+        <ErrorMessage>
+          <p>Invalid credentials.</p>
+        </ErrorMessage>
+      )}
+
       <p className="text-center text-sm text-white">
         Don't have an account?{" "}
         <Link

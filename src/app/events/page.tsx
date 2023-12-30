@@ -9,6 +9,9 @@ import SlideIntro from "@/components/SlideIntro";
 import EventCard from "./_components/EventCard";
 import { type Event } from "@/lib/types";
 import { useState } from "react";
+import { SessionProvider, useSession } from "next-auth/react";
+import LoadingCenter from "@/components/Loading";
+import CreateEventCard from "./_components/CreateEventCard";
 
 const testEvent = {
   name: "Workshop",
@@ -23,7 +26,20 @@ const testEvent = {
 
 // Homepage component
 export default function EventsPage() {
+  return (
+    <SessionProvider>
+      <Main />
+    </SessionProvider>
+  );
+}
+
+function Main(): JSX.Element {
   const [backgroundText, setBackgroundText] = useState("EVENTS");
+  const { data: session, status } = useSession();
+
+  if (status === "loading") {
+    return <LoadingCenter />;
+  }
 
   return (
     <>
@@ -35,8 +51,9 @@ export default function EventsPage() {
         <SlideIntro />
       </BrowserView>
 
-      <MainWrapper className="fade-in-delay z-40">
+      <main className="fade-in-delay z-40 flex min-h-screen flex-wrap items-center justify-center gap-12 p-10 lg:p-20">
         <EventCard
+          user={session?.user || null}
           event={testEvent}
           onMouseEnter={() => {
             setBackgroundText(testEvent.name.toUpperCase());
@@ -45,7 +62,8 @@ export default function EventsPage() {
             setBackgroundText("EVENTS");
           }}
         />
-      </MainWrapper>
+        <CreateEventCard user={session?.user || null} />
+      </main>
     </>
   );
 }

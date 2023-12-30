@@ -1,12 +1,17 @@
 import { cn } from "@/utils/cn";
 import Image from "next/image";
 import Link from "next/link";
-import { type Event } from "@/lib/types";
+import { Permission, type Event } from "@/lib/types";
+import { User } from "next-auth";
+import { hasPermissions } from "@/lib/permissions";
+import EventEditButton from "./EventEditButton";
+import EventDeleteButton from "./EventDeleteButton";
 
 interface EventCardProps {
   className?: string;
-  onMouseEnter?: any;
-  onMouseLeave?: any;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
+  user: User | null;
   event: Event;
 }
 
@@ -51,6 +56,8 @@ export default function EventCard(props: EventCardProps): JSX.Element {
         <p className="ml-1 mt-4 font-thin text-white">{props.event.location}</p>
         <p className="ml-1 font-thin text-white">{props.event.date}</p>
       </div>
+      <EventEditButton user={props.user} />
+      <EventDeleteButton user={props.user} />
     </div>
   );
 }
