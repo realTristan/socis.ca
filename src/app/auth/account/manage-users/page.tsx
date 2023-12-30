@@ -20,13 +20,7 @@ import SaveChangesButton from "./_components/SaveChangesButton";
 import SearchInput from "./_components/SearchInput";
 import PermissionsList from "./_components/PermissionsList";
 import EditUserButton from "./_components/EditUserButton";
-
-export enum Status {
-  LOADING,
-  ERROR,
-  SUCCESS,
-  IDLE,
-}
+import { Status } from "./_utils/status";
 
 // Homepage component
 export default function ManageUsersPage() {
@@ -81,12 +75,20 @@ function Main(): JSX.Element {
   }
 
   if (status === "unauthenticated" || !session) {
-    return <InvalidSession />;
+    return (
+      <MainWrapper>
+        <InvalidSession />
+      </MainWrapper>
+    );
   }
 
   // If the user doesn't have the ADMIN permission, redirect them to the account page
   if (!hasPermissions(session.user, [Permission.ADMIN])) {
-    return <InvalidPermissions />;
+    return (
+      <MainWrapper>
+        <InvalidPermissions />
+      </MainWrapper>
+    );
   }
 
   return (

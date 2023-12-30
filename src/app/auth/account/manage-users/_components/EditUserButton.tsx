@@ -1,6 +1,6 @@
 import { type User } from "next-auth";
 import { type Dispatch, type SetStateAction } from "react";
-import { Status } from "../page";
+import { Status } from "../_utils/status";
 
 interface EditUserButtonProps {
   userUpdateStatus: Status;
