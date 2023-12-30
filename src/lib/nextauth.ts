@@ -17,8 +17,16 @@ export const handler = NextAuth({
 
       const res = await import("@/app/api/users/email/[email]/route");
       const encodedEmail = base64encode(user.email);
-      const response = await res.GET({
-        url: `/api/users/${encodedEmail}`,
+      const userSecret = await generateUserSecret(user.email);
+      const response = await res.POST({
+        url: `/api/users/email/${encodedEmail}`,
+        json: async () => ({
+          secret: true,
+        }),
+
+        headers: {
+          get: (name: string) => (name === "Authorization" ? userSecret : ""),
+        },
       } as NextRequest);
 
       if (!response.ok) {
@@ -51,7 +59,7 @@ export const handler = NextAuth({
         const encodedEmail = base64encode(credentials.email);
         const userSecret = await generateUserSecret(credentials.email);
         const response = await res.POST({
-          url: `/api/users/${encodedEmail}`,
+          url: `/api/users/email/${encodedEmail}`,
           json: async () => ({
             password: true,
           }),

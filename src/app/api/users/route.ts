@@ -2,6 +2,8 @@ import { Prisma } from "@/lib/prisma";
 import { type NextRequest, NextResponse } from "next/server";
 import { Response } from "@/lib/responses";
 import { genId, sha256 } from "@/lib/crypto";
+import { hasPermissions } from "@/lib/permissions";
+import { Permission } from "@/types/types";
 
 /**
  * Get all of the users
@@ -72,4 +74,39 @@ export async function POST(req: NextRequest) {
     },
     { status: 200 },
   );
+}
+
+/**
+ * Update an user in the users database
+ * @param req The request object
+ * @returns The response object
+ */
+export async function PUT(req: NextRequest) {
+  // Get the user id and data from the request body
+  const { userId, data } = await req.json();
+
+  // Get the authorization from the headers
+  const secret = req.headers.get("Authorization");
+  if (!secret) {
+    return NextResponse.json(Response.InvalidHeaders, { status: 400 });
+  }
+
+  // Verify that the user has the correct permissions
+  const user = await Prisma.getUser(secret);
+  if (!user) {
+    return NextResponse.json(Response.InvalidAuthorization, { status: 400 });
+  }
+
+  if (!hasPermissions(user, [Permission.ADMIN])) {
+    return NextResponse.json(Response.InvalidAuthorization, { status: 400 });
+  }
+
+  return await Prisma.updateUserById(userId, data)
+    .then((user) => {
+      return NextResponse.json({ user, ...Response.Success }, { status: 200 });
+    })
+    .catch((err) => {
+      console.error(err);
+      return NextResponse.json(Response.InternalError, { status: 500 });
+    });
 }

@@ -242,6 +242,40 @@ export class Prisma extends PrismaClient {
       },
     });
   };
+
+  /**
+   * Update the user
+   * @param userSecret The user's secret
+   * @param data The data to update
+   */
+  public static readonly updateUser = async (
+    userSecret: string,
+    data: any,
+  ): Promise<User> => {
+    return await Prisma.update("user", {
+      where: {
+        secret: userSecret,
+      },
+      data,
+    });
+  };
+
+  /**
+   * update the user by id
+   * @param userId The user's id
+   * @param data The data to update
+   */
+  public static readonly updateUserById = async (
+    userId: string,
+    data: any,
+  ): Promise<User> => {
+    return await Prisma.update("user", {
+      where: {
+        id: userId,
+      },
+      data,
+    });
+  };
 }
 
 // create a global prisma instance

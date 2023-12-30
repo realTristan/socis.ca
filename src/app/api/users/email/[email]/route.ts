@@ -51,6 +51,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(Response.InvalidQuery, { status: 400 });
   }
 
+  // Get the password and secret boolean from the request body
+  const { password, secret } = await req.json();
+
   // Get the user's info
   const decodedEmail = base64decode(email);
   const user = await Prisma.getUserByEmail(decodedEmail).catch(() => null);
@@ -74,7 +77,8 @@ export async function POST(req: NextRequest) {
         email: user.email,
         image: user.image,
         permissions: user.permissions,
-        password: user.password,
+        password: password ? user.password : undefined,
+        secret: secret ? user.secret : undefined,
       },
       ...Response.Success,
     },
