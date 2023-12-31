@@ -5,11 +5,28 @@
 body {
   background-color: #1f1f1f;
   overflow-x: hidden;
-  overflow-y: hidden;
+  overflow-y: scroll;
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Custom scroll bar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1f1f1f;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #393939;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #10b981;
 }
 
 /* Slide in intro effect */
@@ -42,9 +59,6 @@ html {
 .outline-emerald {
   -webkit-text-stroke-width: 5px;
   -webkit-text-stroke-color: #10b981;
-}
-
-.background-gradient {
 }
 
 .fade-in {

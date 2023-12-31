@@ -31,7 +31,7 @@ model Event {
   name        String   @default("New Event")
   description String   @default("New Event")
   image       String   @default("/images/event-banner-tmp1.png")
-  date        DateTime @default(now())
+  date        String   @default("2021-01-01")
   location    String   @default("The University of Guelph")
   perks       String[]
   isBest      Boolean  @default(false)

@@ -6,22 +6,11 @@ import { BrowserView } from "react-device-detect";
 import Background from "@/components/Background";
 import SlideIntro from "@/components/SlideIntro";
 import EventCard from "./_components/EventCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SessionProvider, useSession } from "next-auth/react";
 import LoadingCenter from "@/components/Loading";
 import CreateEventCard from "./_components/CreateEventCard";
-
-const testEvent = {
-  name: "Workshop",
-  description:
-    "Learn Firebase, Authentication, Google Cloud, and Angular in the upcoming SOCIS Event! Bring your friends - pizza included!",
-  location: "The University of Guelph",
-  date: "December 25th 2023",
-  href: "/",
-  id: "98372okrugyfabhjsflu3yfg",
-  image: "/images/event-banner-tmp1.png",
-  perks: ["Pizza", "Swag", "Networking"],
-};
+import { type Event } from "@/types/types";
 
 // Homepage component
 export default function EventsPage() {
@@ -34,7 +23,18 @@ export default function EventsPage() {
 
 function Main(): JSX.Element {
   const [backgroundText, setBackgroundText] = useState("EVENTS");
+  const [events, setEvents] = useState<Event[]>([]);
   const { data: session, status } = useSession();
+
+  useEffect(() => {
+    if (!session?.user) {
+      return;
+    }
+
+    fetch("/api/events")
+      .then((res) => res.json())
+      .then((data) => setEvents(data.events));
+  }, [session]);
 
   if (status === "loading") {
     return <LoadingCenter />;
@@ -51,16 +51,20 @@ function Main(): JSX.Element {
       </BrowserView>
 
       <main className="fade-in-delay z-40 flex min-h-screen flex-wrap items-center justify-center gap-12 p-10 lg:p-20">
-        <EventCard
-          user={session?.user ?? null}
-          event={testEvent}
-          onMouseEnter={() => {
-            setBackgroundText(testEvent.name.toUpperCase());
-          }}
-          onMouseLeave={() => {
-            setBackgroundText("EVENTS");
-          }}
-        />
+        {events.map((event) => (
+          <EventCard
+            key={event.id}
+            user={session?.user ?? null}
+            event={event}
+            onMouseEnter={() => {
+              setBackgroundText(event.name.toUpperCase());
+            }}
+            onMouseLeave={() => {
+              setBackgroundText("EVENTS");
+            }}
+          />
+        ))}
+
         <CreateEventCard user={session?.user ?? null} />
       </main>
     </>

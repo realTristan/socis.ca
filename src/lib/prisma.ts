@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { type User } from "next-auth";
 import { genId } from "./crypto";
+import { type Event } from "@/types/types";
 
 export class Prisma extends PrismaClient {
   constructor() {
@@ -272,6 +273,52 @@ export class Prisma extends PrismaClient {
     return await Prisma.update("user", {
       where: {
         id: userId,
+      },
+      data,
+    });
+  };
+
+  /**
+   * Get all of the events
+   * @returns The events
+   */
+  public static readonly getEvents = async () => {
+    return await Prisma.findMany("event", {});
+  };
+
+  /**
+   * Delete an event
+   * @param eventId The event id
+   * @returns The deleted event
+   */
+  public static readonly deleteEvent = async (eventId: string) => {
+    return await Prisma.delete("event", {
+      where: {
+        id: eventId,
+      },
+    });
+  };
+
+  /**
+   * Create an event
+   * @param event The event to create
+   * @returns The created event
+   */
+  public static readonly createEvent = async (event: Event) => {
+    return await Prisma.create("event", {
+      data: event,
+    });
+  };
+
+  /**
+   * Update an event
+   * @param event The event to update
+   * @returns The updated event
+   */
+  public static readonly updateEvent = async (eventId: string, data: Event) => {
+    return await Prisma.update("event", {
+      where: {
+        id: eventId,
       },
       data,
     });

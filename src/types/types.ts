@@ -13,14 +13,16 @@ export interface Response {
 }
 
 export interface Event {
+  id: string;
+  createdAt?: string;
+  updatedAt?: string;
   name: string;
   description: string;
-  id: string;
   date: string;
   location: string;
   image: string;
-  href: string;
   perks: string[];
+  isBest: boolean;
 }
 
 export enum Permission {

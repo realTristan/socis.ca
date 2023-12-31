@@ -11,7 +11,7 @@ export default function Background(props: BackgroundProps) {
     <div className={cn("relative", props.className)}>
       <h1
         className={cn(
-          "absolute -top-80 left-1/2 -translate-x-1/2 transform text-[40rem] font-black",
+          "fixed -top-80 left-1/2 -translate-x-1/2 transform text-[40rem] font-black",
           props.animated ? "animate-text-outline-emerald" : "text-outline-dark",
         )}
       >
@@ -19,7 +19,7 @@ export default function Background(props: BackgroundProps) {
       </h1>
       <h1
         className={cn(
-          "absolute left-1/2 top-8 -translate-x-1/2 transform text-[40rem] font-black",
+          "fixed left-1/2 top-8 -translate-x-1/2 transform text-[40rem] font-black",
           props.animated ? "animate-text-outline-emerald" : "text-outline-dark",
         )}
       >
@@ -27,7 +27,7 @@ export default function Background(props: BackgroundProps) {
       </h1>
       <h1
         className={cn(
-          "absolute left-1/2 top-96 -translate-x-1/2 transform text-[40rem] font-black",
+          "fixed left-1/2 top-96 -translate-x-1/2 transform text-[40rem] font-black",
           props.animated ? "animate-text-outline-emerald" : "text-outline-dark",
         )}
       >

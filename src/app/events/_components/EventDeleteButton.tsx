@@ -1,13 +1,38 @@
+import { LoadingRelative } from "@/components/Loading";
 import { hasPermissions } from "@/lib/permissions";
-import { Permission } from "@/types/types";
+import { Permission, type Event } from "@/types/types";
 import { type User } from "next-auth";
 import { useState } from "react";
 
-export default function DeleteButton({
-  user,
-}: {
+async function deleteEventApi(user: User, id: string) {
+  return await fetch("/api/events", {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: user.secret,
+    },
+    body: JSON.stringify({ eventId: id }),
+  });
+}
+
+enum Status {
+  IDLE,
+  LOADING,
+  SUCCESS,
+  ERROR,
+}
+
+interface EventDeleteButtonProps {
   user: User | null;
-}): JSX.Element {
+  event: Event;
+}
+
+export default function DeleteButton(
+  props: EventDeleteButtonProps,
+): JSX.Element {
+  const { user, event } = props;
+
+  const [status, setStatus] = useState(Status.IDLE);
   const [confirm, setConfirm] = useState(false);
   if (!user) {
     return <></>;
@@ -21,11 +46,31 @@ export default function DeleteButton({
   if (confirm) {
     return (
       <div className="flex flex-row gap-2">
-        <button className="mt-4 flex h-12 flex-col items-center justify-center rounded-lg border border-emerald-500 px-4 text-center text-sm font-thin text-white hover:bg-emerald-900/50">
-          <CheckmarkSvg />
+        <button
+          className="mt-4 flex h-12 flex-col items-center justify-center rounded-lg border border-emerald-500 px-4 text-center text-sm font-thin text-white hover:bg-emerald-900/50 disabled:opacity-50"
+          disabled={status === Status.LOADING}
+          onClick={async () => {
+            setStatus(Status.LOADING);
+            const res = await deleteEventApi(user, event.id);
+
+            if (res.ok) {
+              setStatus(Status.SUCCESS);
+              window.location.reload();
+              return;
+            }
+
+            setStatus(Status.ERROR);
+          }}
+        >
+          {status === Status.LOADING ? (
+            <LoadingRelative className="h-5 w-5" />
+          ) : (
+            <CheckmarkSvg />
+          )}
         </button>
         <button
-          className="mt-4 flex h-12 flex-col items-center justify-center rounded-lg border border-emerald-500 px-4 text-center text-sm font-thin text-white hover:bg-emerald-900/50"
+          disabled={status === Status.LOADING}
+          className="mt-4 flex h-12 flex-col items-center justify-center rounded-lg border border-emerald-500 px-4 text-center text-sm font-thin text-white hover:bg-emerald-900/50 disabled:opacity-50"
           onClick={() => setConfirm(false)}
         >
           <XSvg />
