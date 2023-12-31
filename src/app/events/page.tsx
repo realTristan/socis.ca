@@ -41,7 +41,7 @@ function Main(): JSX.Element {
     fetch("/api/events")
       .then((res) => res.json())
       .then((data) => {
-        setEvents(data);
+        setEvents(data.events);
         setFetch(Status.SUCCESS);
       })
       .catch(() => {
