@@ -11,6 +11,7 @@ import PermissionsList from "./_components/PermissionsList";
 import Background from "@/components/Background";
 import AdminOptionsList from "./_components/AdminOptionsList";
 import DarkOverlay from "./_components/DarkOverlay";
+import SettingsList from "./_components/SettingsList/SettingsList";
 
 // Homepage component
 export default function AccountPage() {
@@ -52,10 +53,17 @@ function Main(): JSX.Element {
       <p className="text-center text-sm font-light text-white/80">
         {session?.user?.email ?? "user"}.
       </p>
+
       <PermissionsList user={session.user} />
+      <SettingsList user={session.user} />
 
       {/* Will return empty if not admin */}
-      <AdminOptionsList user={session.user} />
+      <div className="mt-4 flex flex-col items-start justify-start">
+        <h1 className="text-center text-3xl font-bold text-white">
+          Admin Console
+        </h1>
+        <AdminOptionsList user={session.user} />
+      </div>
     </div>
   );
 }

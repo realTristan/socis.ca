@@ -16,6 +16,7 @@ enum SignUpStatus {
   ERROR,
   USER_EXISTS,
   LOADING,
+  INVALID_EMAIL,
 }
 
 function userAlreadyExistsApi(email: string) {
@@ -61,10 +62,13 @@ function Components(): JSX.Element {
 
     setStatus(SignUpStatus.LOADING);
 
+    if (!email.endsWith("@uoguelph.ca")) {
+      return setStatus(SignUpStatus.INVALID_EMAIL);
+    }
+
     // Check if the user already exists
     const userResponse = await userAlreadyExistsApi(email);
     if (userResponse.ok) {
-      // If the user already exists, return an error
       return setStatus(SignUpStatus.USER_EXISTS);
     }
 
@@ -112,6 +116,13 @@ function Components(): JSX.Element {
         {/* An error has occurred - most likely an internal error */}
         {status === SignUpStatus.ERROR && (
           <ErrorMessage>An error has occurred. Please try again.</ErrorMessage>
+        )}
+
+        {/* The email provided is invalid */}
+        {status === SignUpStatus.INVALID_EMAIL && (
+          <ErrorMessage>
+            The email provided is invalid. Please use your @uoguelph.ca email.
+          </ErrorMessage>
         )}
 
         {/* The user already exists - they must sign in to continue */}

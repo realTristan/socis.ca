@@ -32,6 +32,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(Response.InvalidBody, { status: 400 });
   }
 
+  if (!email.endsWith("@uoguelph.ca")) {
+    return NextResponse.json(Response.InvalidQuery, { status: 400 });
+  }
+
   // Generate a new user secret
   const bearerSecret = process.env.BEARER_SECRET;
   if (!bearerSecret) {
@@ -65,9 +69,9 @@ export async function POST(req: NextRequest) {
     {
       user: {
         id: user.id,
-        name,
+        name: user.name,
         email,
-        image,
+        image: user.image,
         permissions: user.permissions,
       },
       ...Response.Success,
@@ -84,6 +88,9 @@ export async function POST(req: NextRequest) {
 export async function PUT(req: NextRequest) {
   // Get the user id and data from the request body
   const { userId, data } = await req.json();
+  if (!userId || !data) {
+    return NextResponse.json(Response.InvalidBody, { status: 400 });
+  }
 
   // Get the authorization from the headers
   const secret = req.headers.get("Authorization");
@@ -97,8 +104,13 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json(Response.InvalidAuthorization, { status: 400 });
   }
 
-  if (!hasPermissions(user, [Permission.ADMIN])) {
+  if (user.id !== userId && !hasPermissions(user, [Permission.ADMIN])) {
     return NextResponse.json(Response.InvalidAuthorization, { status: 400 });
+  }
+
+  // Verify the name is less than 50 characters
+  if (data.name && (data.name.length > 50 || data.name.length < 1)) {
+    return NextResponse.json(Response.InvalidBody, { status: 400 });
   }
 
   return await Prisma.updateUserById(userId, data)
@@ -106,7 +118,7 @@ export async function PUT(req: NextRequest) {
       return NextResponse.json({ user, ...Response.Success }, { status: 200 });
     })
     .catch((err) => {
-      console.error(err);
+      console.log(err);
       return NextResponse.json(Response.InternalError, { status: 500 });
     });
 }

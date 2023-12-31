@@ -27,12 +27,12 @@ async function isValidTokenApi(email: string, token: string) {
   return res.ok;
 }
 
-async function createUserApi(email: string, password: string) {
+async function createUserApi(name: string, email: string, password: string) {
   const encryptedPassword = await sha256(password);
   const res = await fetch("/api/users", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password: encryptedPassword }),
+    body: JSON.stringify({ name, email, password: encryptedPassword }),
   });
 
   return res.ok;
@@ -41,6 +41,7 @@ async function createUserApi(email: string, password: string) {
 export default function SignUpPage() {
   const [status, setStatus] = useState(AuthStatus.IDLE);
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const path = usePathname();
 
   useEffect(() => {
@@ -82,7 +83,7 @@ export default function SignUpPage() {
     }
 
     // Send an api request to create the user's account
-    const res = await createUserApi(email, password);
+    const res = await createUserApi(name, email, password);
     res ? setStatus(AuthStatus.SUCCESS) : setStatus(AuthStatus.ERROR);
   };
 
@@ -127,11 +128,19 @@ export default function SignUpPage() {
           value={email}
           disabled={true}
         />
+        <input
+          className="rounded-lg border border-emerald-500 bg-primary px-4 py-3 text-base font-thin tracking-wider text-white duration-300 ease-in-out focus:outline-none disabled:opacity-50"
+          placeholder="Name"
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
 
         <input
           className="rounded-lg border border-emerald-500 bg-primary px-4 py-3 text-base font-thin tracking-wider text-white duration-300 ease-in-out focus:outline-none"
           placeholder="Password"
           type="password"
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
 
@@ -139,6 +148,7 @@ export default function SignUpPage() {
           className="rounded-lg border border-emerald-500 bg-primary px-4 py-3 text-base font-thin tracking-wider text-white duration-300 ease-in-out focus:outline-none"
           placeholder="Verify Password"
           type="password"
+          value={verificationPassword}
           onChange={(e) => setVerificationPassword(e.target.value)}
         />
 
