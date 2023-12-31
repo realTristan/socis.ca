@@ -11,6 +11,7 @@ import { SessionProvider, useSession } from "next-auth/react";
 import LoadingCenter from "@/components/Loading";
 import CreateEventCard from "./_components/CreateEventCard";
 import { type Event } from "@/types/types";
+import ErrorMessage from "@/components/ErrorMessage";
 
 // Homepage component
 export default function EventsPage() {
@@ -21,19 +22,31 @@ export default function EventsPage() {
   );
 }
 
+enum Status {
+  IDLE,
+  LOADING,
+  SUCCESS,
+  ERROR,
+}
+
 function Main(): JSX.Element {
   const [backgroundText, setBackgroundText] = useState("EVENTS");
   const [events, setEvents] = useState<Event[]>([]);
+  const [fetchStatus, setFetch] = useState<Status>(Status.IDLE);
   const { data: session, status } = useSession();
 
   useEffect(() => {
-    if (!session?.user) {
-      return;
-    }
+    setFetch(Status.LOADING);
 
     fetch("/api/events")
       .then((res) => res.json())
-      .then((data) => setEvents(data.events));
+      .then((data) => {
+        setEvents(data);
+        setFetch(Status.SUCCESS);
+      })
+      .catch(() => {
+        setFetch(Status.ERROR);
+      });
   }, [session]);
 
   if (status === "loading") {
@@ -51,19 +64,27 @@ function Main(): JSX.Element {
       </BrowserView>
 
       <main className="fade-in-delay z-40 flex min-h-screen flex-wrap items-center justify-center gap-12 p-10 lg:p-20">
-        {events.map((event) => (
-          <EventCard
-            key={event.id}
-            user={session?.user ?? null}
-            event={event}
-            onMouseEnter={() => {
-              setBackgroundText(event.name.toUpperCase());
-            }}
-            onMouseLeave={() => {
-              setBackgroundText("EVENTS");
-            }}
-          />
-        ))}
+        {fetchStatus === Status.LOADING && <LoadingCenter />}
+        {fetchStatus === Status.SUCCESS &&
+          events.map((event) => (
+            <EventCard
+              key={event.id}
+              user={session?.user ?? null}
+              event={event}
+              onMouseEnter={() => {
+                setBackgroundText(event.name.toUpperCase());
+              }}
+              onMouseLeave={() => {
+                setBackgroundText("EVENTS");
+              }}
+            />
+          ))}
+
+        {fetchStatus === Status.ERROR && (
+          <ErrorMessage>
+            <p>There was an error fetching the events.</p>
+          </ErrorMessage>
+        )}
 
         <CreateEventCard user={session?.user ?? null} />
       </main>
