@@ -1,8 +1,28 @@
 # socis.ca
+![image](https://github.com/realTristan/socis.ca/assets/75189508/235b6aa9-77cc-490c-9234-856a39f36c1b)
 
-# Todo
+# Contributing
+As of 2024, the Engineering Ambition team is the sole contributor to socis.ca.
 
-- [ ] Event creation system (yoink from snowboard club)
-- [ ] About us page (headshots)
-- [ ] Vision page (Vision statement)
-- [ ] The admin should be able to add new socis exec members
+# License
+MIT License
+
+Copyright (c) 2023 Simpson Computer Technologies Research
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
