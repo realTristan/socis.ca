@@ -10,23 +10,16 @@ export const handler = NextAuth({
   },
   callbacks: {
     async session({ session }) {
-      const user = session.user as User;
-      if (!user) {
-        return session;
+      const bearer_secret = process.env.BEARER_SECRET;
+      if (!bearer_secret) {
+        throw new Error("BEARER_SECRET is not defined");
       }
 
       const res = await import("@/app/api/users/email/[email]/route");
-      const encodedEmail = base64encode(user.email);
-      const userSecret = await generateUserSecret(user.email);
-      const response = await res.POST({
+      const encodedEmail = base64encode(session.user.email);
+      const userSecret = await generateUserSecret(session.user.email);
+      const response = await res.GET({
         url: `/api/users/email/${encodedEmail}`,
-        json: async () => ({
-          secret: true,
-        }),
-
-        headers: {
-          get: (name: string) => (name === "Authorization" ? userSecret : ""),
-        },
       } as NextRequest);
 
       if (!response.ok) {
@@ -36,7 +29,10 @@ export const handler = NextAuth({
       const json = await response.json();
       return {
         ...session,
-        user: json.user,
+        user: {
+          ...json.user,
+          secret: userSecret,
+        },
       };
     },
   },
@@ -54,43 +50,28 @@ export const handler = NextAuth({
           return null;
         }
 
-        // Get the user from the database using the /api/users/[email] route
-        const res = await import("@/app/api/users/email/[email]/route");
-        const encodedEmail = base64encode(credentials.email);
-        const userSecret = await generateUserSecret(credentials.email);
+        // Verify the users credentials
+        const hashedPassword = await sha256(credentials.password);
+        const res = await import("@/app/api/users/validate-credentials/route");
         const response = await res.POST({
-          url: `/api/users/email/${encodedEmail}`,
+          url: "/api/users/validate-credentials",
           json: async () => ({
-            password: true,
+            email: credentials.email,
+            password: hashedPassword,
           }),
-
-          headers: {
-            get: (name: string) => (name === "Authorization" ? userSecret : ""),
-          },
         } as NextRequest);
 
         if (!response.ok) {
           return null;
         }
 
+        // Verify that the password is valid
         const json = await response.json();
-        const user = json.user;
-
-        // Check the password
-        const hashedProvidedPassword = await sha256(credentials.password);
-        if (hashedProvidedPassword !== user.password) {
+        if (!json.valid) {
           return null;
         }
 
-        // Return the user
-        return {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          image: user.image,
-          secret: userSecret,
-          permissions: user.permissions,
-        } as User;
+        return json.user as User;
       },
     }),
   ],

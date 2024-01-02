@@ -118,6 +118,7 @@ export default function SignUpPage() {
   const disableSubmitButton =
     !password ||
     password !== verificationPassword ||
+    status === AuthStatus.LOADING ||
     status === AuthStatus.SUCCESS;
 
   // If the token is valid, return the password form
@@ -140,23 +141,32 @@ export default function SignUpPage() {
           placeholder="Name"
           type="text"
           value={name}
+          disabled={
+            status === AuthStatus.LOADING || status === AuthStatus.SUCCESS
+          }
           onChange={(e) => setName(e.target.value)}
         />
 
         <input
-          className="rounded-lg border border-emerald-500 bg-primary px-4 py-3 text-base font-thin tracking-wider text-white duration-300 ease-in-out focus:outline-none"
+          className="rounded-lg border border-emerald-500 bg-primary px-4 py-3 text-base font-thin tracking-wider text-white duration-300 ease-in-out focus:outline-none disabled:opacity-50"
           placeholder="Password"
           type="password"
           value={password}
+          disabled={
+            status === AuthStatus.LOADING || status === AuthStatus.SUCCESS
+          }
           onChange={(e) => setPassword(e.target.value)}
         />
 
         <input
-          className="rounded-lg border border-emerald-500 bg-primary px-4 py-3 text-base font-thin tracking-wider text-white duration-300 ease-in-out focus:outline-none"
+          className="rounded-lg border border-emerald-500 bg-primary px-4 py-3 text-base font-thin tracking-wider text-white duration-300 ease-in-out focus:outline-none disabled:opacity-50"
           placeholder="Verify Password"
           type="password"
           value={verificationPassword}
           onChange={(e) => setVerificationPassword(e.target.value)}
+          disabled={
+            status === AuthStatus.LOADING || status === AuthStatus.SUCCESS
+          }
         />
 
         {/* The submission button */}
@@ -170,6 +180,7 @@ export default function SignUpPage() {
             <p>Sign up</p>
           )}
         </button>
+
         {/* If the inputted passwords don't match, return an error */}
         {password !== verificationPassword && (
           <ErrorMessage>Passwords do not match.</ErrorMessage>

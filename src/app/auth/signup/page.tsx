@@ -28,7 +28,7 @@ function userAlreadyExistsApi(email: string) {
 }
 
 function sendEmailApi(email: string) {
-  return fetch("/api/auth/email", {
+  return fetch("/api/auth/email/send", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email }),
@@ -89,15 +89,21 @@ function Components(): JSX.Element {
           SIGN UP
         </h1>
         <input
-          className="rounded-lg border border-emerald-500 bg-primary px-4 py-3 text-base font-thin tracking-wider text-white duration-300 ease-in-out focus:outline-none"
+          className="rounded-lg border border-emerald-500 bg-primary px-4 py-3 text-base font-thin tracking-wider text-white duration-300 ease-in-out focus:outline-none disabled:opacity-50"
           placeholder="Email"
           type="email"
           onChange={(e) => setEmail(e.target.value)}
+          value={email}
+          disabled={
+            status === SignUpStatus.LOADING || status === SignUpStatus.SUCCESS
+          }
         />
         <button
           className="btn mt-2 flex flex-col items-center justify-center rounded-lg border border-emerald-500 bg-primary px-10 py-3 text-base font-thin tracking-wider text-white duration-300 ease-in-out hover:bg-emerald-950/50 disabled:opacity-50"
           type="submit"
-          disabled={status === SignUpStatus.LOADING}
+          disabled={
+            status === SignUpStatus.LOADING || status === SignUpStatus.SUCCESS
+          }
         >
           {status === SignUpStatus.LOADING ? (
             <LoadingRelative className="h-5 w-5" />

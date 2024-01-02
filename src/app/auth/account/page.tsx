@@ -9,7 +9,7 @@ import LoadingCenter from "@/components/Loading";
 import InvalidSession from "./_components/InvalidSession";
 import PermissionsList from "./_components/PermissionsList";
 import Background from "@/components/Background";
-import AdminOptionsList from "./_components/AdminOptionsList";
+import AdminConsoleList from "./_components/AdminConsoleList";
 import DarkOverlay from "./_components/DarkOverlay";
 import SettingsList from "./_components/SettingsList/SettingsList";
 
@@ -59,10 +59,7 @@ function Main(): JSX.Element {
 
       {/* Will return empty if not admin */}
       <div className="mt-4 flex flex-col items-start justify-start">
-        <h1 className="text-center text-3xl font-bold text-white">
-          Admin Console
-        </h1>
-        <AdminOptionsList user={session.user} />
+        <AdminConsoleList user={session.user} />
       </div>
     </div>
   );
