@@ -27,12 +27,17 @@ async function isValidTokenApi(email: string, token: string) {
   return res.ok;
 }
 
-async function createUserApi(name: string, email: string, password: string) {
+async function createUserApi(
+  name: string,
+  email: string,
+  password: string,
+  token: string,
+) {
   const encryptedPassword = await sha256(password);
   const res = await fetch("/api/users", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, email, password: encryptedPassword }),
+    body: JSON.stringify({ name, email, password: encryptedPassword, token }),
   });
 
   return res.ok;
@@ -41,6 +46,7 @@ async function createUserApi(name: string, email: string, password: string) {
 export default function SignUpPage() {
   const [status, setStatus] = useState(AuthStatus.IDLE);
   const [email, setEmail] = useState("");
+  const [token, setToken] = useState("");
   const [name, setName] = useState("");
   const path = usePathname();
 
@@ -57,11 +63,12 @@ export default function SignUpPage() {
 
     // Base64 decode the data
     const decodedData = base64decode(data);
-    const { email: _email, token } = JSON.parse(decodedData);
+    const { email: _email, token: _token } = JSON.parse(decodedData);
     setEmail(_email);
+    setToken(_token);
 
     // Check if the provided token was create in the past 10 minutes
-    isValidTokenApi(_email, token).then((res) => {
+    isValidTokenApi(_email, _token).then((res) => {
       if (!res) {
         return setStatus(AuthStatus.INVALID_TOKEN);
       }
@@ -83,7 +90,7 @@ export default function SignUpPage() {
     }
 
     // Send an api request to create the user's account
-    const res = await createUserApi(name, email, password);
+    const res = await createUserApi(name, email, password, token);
     res ? setStatus(AuthStatus.SUCCESS) : setStatus(AuthStatus.ERROR);
   };
 
@@ -111,6 +118,7 @@ export default function SignUpPage() {
   const disableSubmitButton =
     !password ||
     password !== verificationPassword ||
+    status === AuthStatus.LOADING ||
     status === AuthStatus.SUCCESS;
 
   // If the token is valid, return the password form
@@ -133,23 +141,32 @@ export default function SignUpPage() {
           placeholder="Name"
           type="text"
           value={name}
+          disabled={
+            status === AuthStatus.LOADING || status === AuthStatus.SUCCESS
+          }
           onChange={(e) => setName(e.target.value)}
         />
 
         <input
-          className="rounded-lg border border-emerald-500 bg-primary px-4 py-3 text-base font-thin tracking-wider text-white duration-300 ease-in-out focus:outline-none"
+          className="rounded-lg border border-emerald-500 bg-primary px-4 py-3 text-base font-thin tracking-wider text-white duration-300 ease-in-out focus:outline-none disabled:opacity-50"
           placeholder="Password"
           type="password"
           value={password}
+          disabled={
+            status === AuthStatus.LOADING || status === AuthStatus.SUCCESS
+          }
           onChange={(e) => setPassword(e.target.value)}
         />
 
         <input
-          className="rounded-lg border border-emerald-500 bg-primary px-4 py-3 text-base font-thin tracking-wider text-white duration-300 ease-in-out focus:outline-none"
+          className="rounded-lg border border-emerald-500 bg-primary px-4 py-3 text-base font-thin tracking-wider text-white duration-300 ease-in-out focus:outline-none disabled:opacity-50"
           placeholder="Verify Password"
           type="password"
           value={verificationPassword}
           onChange={(e) => setVerificationPassword(e.target.value)}
+          disabled={
+            status === AuthStatus.LOADING || status === AuthStatus.SUCCESS
+          }
         />
 
         {/* The submission button */}
@@ -163,6 +180,7 @@ export default function SignUpPage() {
             <p>Sign up</p>
           )}
         </button>
+
         {/* If the inputted passwords don't match, return an error */}
         {password !== verificationPassword && (
           <ErrorMessage>Passwords do not match.</ErrorMessage>

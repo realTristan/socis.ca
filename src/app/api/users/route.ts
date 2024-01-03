@@ -4,6 +4,7 @@ import { Response } from "@/lib/responses";
 import { genId, sha256 } from "@/lib/crypto";
 import { hasPermissions } from "@/lib/permissions";
 import { Permission } from "@/types/types";
+import { verifyAuthorizationToken } from "@/lib/auth";
 
 /**
  * Get all of the users
@@ -27,9 +28,14 @@ export async function GET() {
  */
 export async function POST(req: NextRequest) {
   // Get the user's info from the request body
-  const { name, email, image, password } = await req.json();
-  if (!email) {
+  const { name, email, image, password, token } = await req.json();
+  if (!email || !token) {
     return NextResponse.json(Response.InvalidBody, { status: 400 });
+  }
+
+  const validToken = await verifyAuthorizationToken(20, token, email);
+  if (!validToken) {
+    return NextResponse.json(Response.InvalidAuthorization, { status: 400 });
   }
 
   if (!email.endsWith("@uoguelph.ca")) {
