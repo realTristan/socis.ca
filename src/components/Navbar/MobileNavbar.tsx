@@ -43,7 +43,7 @@ export default function MobileNavbar(props: NavbarProps): JSX.Element {
             HOME
           </Link>
           <Link
-            href="/trips-and-tickets"
+            href="/events"
             className={cn(
               "btn w-full transform cursor-pointer px-5 py-3 text-sm font-normal tracking-widest text-emerald-500 duration-300 ease-in-out hover:translate-x-4",
             )}
@@ -51,7 +51,7 @@ export default function MobileNavbar(props: NavbarProps): JSX.Element {
             EVENTS
           </Link>
           <Link
-            href="/about-us"
+            href="/about"
             className={cn(
               "btn w-full transform cursor-pointer px-5 py-3 text-sm font-normal tracking-widest text-emerald-500 duration-300 ease-in-out hover:translate-x-4",
             )}
@@ -59,7 +59,7 @@ export default function MobileNavbar(props: NavbarProps): JSX.Element {
             ABOUT US
           </Link>
           <Link
-            href="/contact"
+            href="/membership"
             className={cn(
               "btn mb-4 w-full transform cursor-pointer px-5 py-3 text-sm font-normal tracking-widest text-emerald-500 duration-300 ease-in-out hover:translate-x-4",
             )}
